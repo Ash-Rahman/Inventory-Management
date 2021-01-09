@@ -28,7 +28,7 @@ const StyledLi = styled.li`
   justify-content: center;
   align-items: center;
   background: ${({ theme, active }) =>
-    active ? theme.colors.darkShade[25] : ""};
+    active ? theme.colors.blue : ""};
 `;
 
 const StyledClosedText = styled.p`
@@ -60,6 +60,10 @@ function Menu(props) {
             {" "}
             <Link to="/checkin"> Checkin </Link>{" "}
           </StyledLi>
+          <StyledLi active={location.pathname === "/createItem"}>
+            {" "}
+            <Link to="/createItem"> Add Item </Link>{" "}
+          </StyledLi>
         </ul>
       </StyledNav>
     </div>
@@ -81,12 +85,12 @@ justify-content: center;
 hr {
   margin: 4px 0 0 4px;
   width: 20%;
-  border: 1px solid ${({ theme }) => theme.colors.darkShade[100]};
+  border: 1px solid ${({ theme }) => theme.colors.blue};
 }
 `;
 
 const StyledUserAvatar = styled.div`
-color: ${({ theme }) => theme.colors.darkShade[50]};
+color: ${({ theme }) => theme.colors.blue};
 display: flex;
 width: 80%;
 align-items: center;
@@ -117,8 +121,8 @@ const StyledWrapper = styled.div`
 width: 100%;
 background: linear-gradient(
   180deg,
-  ${({ theme }) => theme.colors.lightPurple} 0%,
-  ${({ theme }) => theme.colors.purple} 100%
+  ${({ theme }) => theme.colors.lightBlue} 0%,
+  ${({ theme }) => theme.colors.blue} 100%
 );
 height: 50px;
 display: flex;
@@ -127,7 +131,6 @@ justify-content: space-between;
 
 function Header(props) {
   const { onClick, open, user, signOut } = props;
- 
 
   const handleClick = e => {
     e.preventDefault();
@@ -138,9 +141,6 @@ function Header(props) {
     signOut();
 
   }
-
-  
-
 
   return (
     <div>
@@ -166,10 +166,10 @@ function Header(props) {
 
 Header.propTypes = {
   onClick: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired, 
+  open: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   signOut: PropTypes.func.isRequired
-  
+
 };
 
 export default Header;

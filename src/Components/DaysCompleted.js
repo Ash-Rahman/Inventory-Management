@@ -23,7 +23,7 @@ function DaysCompleted(props) {
   const StyledGoalHeading = styled.h4`
     color: #1f2041;
   `;
-  
+
   return (
     <Tile>
       <StyledRootDiv>

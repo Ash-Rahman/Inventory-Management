@@ -5,6 +5,9 @@ const theme = {
     grey: "#E9E9EC",
     green: "#6FCF97",
     darkGreen: "#256C43",
+    lightBlue: "#355165",
+    blue: "#283B4A",
+    darkBlue: "#252F36",
     darkShade: {
       100: "rgba(31, 32, 65, 100)",
       75: "rgba(31, 32, 65, 0.75)",
@@ -30,7 +33,7 @@ const theme = {
 
     h4: {
         fontSize: "24px"
-    }, 
+    },
 
     h6: {
       fontSize: "14px",

@@ -8,12 +8,14 @@ import { Switch, Route, useLocation, Redirect } from "react-router-dom";
 import Dash from "./Views/Dash";
 import Join from "./Views/Join";
 import Checkin from "./Views/Checkin";
+import CreateItem from "./Views/CreateItem";
 import Profile from "./Views/Profile";
 import Login from "./Views/Login";
 
 import useChallenge from "./services/firebase/useChallenge";
 import useAuth from "./services/firebase/useAuth";
-import useCheckin from "./services/firebase/useCheckin"
+//import useCheckin from "./services/firebase/useCheckin";
+import useCheckin from "./services/firebase/useItem";
 import firebase from "firebase/app"; // the firbase core lib
 import "firebase/auth"; // specific products
 import "firebase/firestore";
@@ -23,7 +25,6 @@ import firebaseConfig from "./config/firebase"; // the firebase config we set up
 
 
 
- 
 let initAttemptedRoute = "/"
 
 function Protected({ authenticated, children, ...rest }) {
@@ -95,7 +96,7 @@ function App() {
   } = useCheckin(firebase.firestore)
 
   const {
-    readChallenges 
+    readChallenges
   } = useChallenge(firebase.firestore);
 
 
@@ -113,9 +114,9 @@ function App() {
 
   if (loading ) {
     return  <Loader />;
-  } 
- 
-  
+  }
+
+
   return (
 
     <div style={{overflowX: 'hidden'}}>
@@ -143,23 +144,23 @@ function App() {
               <Dash user={user} readComments={readComments} createComment={createComment} readCheckins={readCheckins} readChallenges={readChallenges} />
             </Protected>
             <RedirectToDash authenticated={isAuthenticated} path="/join">
-              
-            
+
+
             {
                 /**
                  * I have set up these loaders to handle the social sign-in redirect
                  * which redirects back to the page you initiated it from
                  * as such we only want to show the page after the redirect has authenticated
                  */
-              } 
+              }
 
                 <Join
                 signInWithProvider={signInWithProvider}
                 createEmailUser={createEmailUser}
               />
 
-          
-              
+
+
             </RedirectToDash>
             <RedirectToDash authenticated={isAuthenticated} path="/login">
                   <Login
@@ -172,6 +173,9 @@ function App() {
             </Protected>
             <Protected authenticated={isAuthenticated} path="/checkin">
               <Checkin  createCheckin={createCheckin}  user={user} />
+            </Protected>
+            <Protected authenticated={isAuthenticated} path="/createItem">
+              <CreateItem  createCheckin={createCheckin}  user={user} />
             </Protected>
           </Switch>
         </div>
