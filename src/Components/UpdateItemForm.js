@@ -9,6 +9,8 @@ import Button from "./Button";
 import ErrorLabel from "./ErrorLabel";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useHistory, useLocation } from "react-router-dom";
+import Item from "./Item";
 
 const StyledTile = styled(Tile)`
   display: grid;
@@ -84,10 +86,29 @@ const StyledCheckinTitle = styled.div`
   }
 `;
 
-const AddItemForm = props => {
+const UpdateItemForm = props => {
 
-  const {onSubmit} = props;
-  //const [total, setTotal] = useState(0);
+  const {onSubmit, item} = props;
+  // console.log("I got item form ", item);
+  // const location = useLocation();
+
+  // const [item, setItemValue] = useState();
+
+  // if (location.query) {
+  //   console.log("query1: ", JSON.stringify(location.query));
+  //   const getItem = async () => {
+  //     const aItem = await getCheckinById(location.query.id);
+  //     console.log("query2: ", location.query);
+  //     item = aItem.data();
+  //     console.log("item: ", item);
+  //     setItemValue(item)
+  //   }
+  //   getItem()
+  // }
+
+  // console.log("Form Item", item);
+  // const { data } = this.props.location;
+  // print(data);
 
   const maxCommentLength = 5;
 
@@ -101,7 +122,7 @@ const AddItemForm = props => {
 
   const { register, handleSubmit, errors, watch } = useForm({
     validationSchema: checkinFormSchema,
-    defaultValues: {comment: "", type: "", uniqueIdentifier: "", name: "", description: "", location: ""}
+    defaultValues: {comment: item.comment, type: item.type, uniqueIdentifier: item.uniqueIdentifier, name: item.name, description: item.description, location: item.location}
   });
 
   const comment = watch('comment');
@@ -150,63 +171,82 @@ const AddItemForm = props => {
   };
 
   return (
+
     <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
       {/*JSON.stringify("this is the" + diet)*/}
+
       <StyledLabel>Item Type*</StyledLabel>
-
-        {/* <textarea rows="4" cols="40" name="type" ref={register}></textarea> */}
-        <StyledFoodDrinkArea>
-          <div>
-            <StyledSelect name="type" ref={register}>
-              <option value="Card"> Card </option>
-              <option value="Cable"> Cables </option>
-              <option value="Cd"> Cd's </option>
-              <option value="USB"> USB </option>
-              <option value="Server"> Server </option>
-            </StyledSelect>
-          </div>
-        </StyledFoodDrinkArea>
-
-      <ErrorLabel> {errors.type && errors.type.message} </ErrorLabel>
+      <StyledCheckinP>
+        <textarea rows="4" cols="40" name="type" value={item.type} ref={register}> </textarea>
+      </StyledCheckinP>
+      <ErrorLabel> {errors.type && errors.name.type} </ErrorLabel>
 
       <StyledLabel>Item Name*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="name" ref={register}></textarea>
+        <textarea rows="4" cols="40" name="name"  ref={register}> </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.name && errors.name.message} </ErrorLabel>
 
       <StyledLabel>Item Unique Identifier (e.g Serial Number)</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="uniqueIdentifier" ref={register}></textarea>
+        <textarea rows="4" cols="40" name="uniqueIdentifier" ref={register}> </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.uniqueIdentifier && errors.uniqueIdentifier.message} </ErrorLabel>
 
       <StyledLabel>Item Description*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="description" ref={register}></textarea>
+        <textarea rows="4" cols="40" name="description" ref={register}>  </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.description && errors.description.message} </ErrorLabel>
 
       <StyledLabel>Item Location*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="location" ref={register}></textarea>
+        <textarea rows="4" cols="40" name="location" ref={register}>  </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
+
+      {/* {diet === "0" && (
+        <StyledFoodDrinkArea>
+          <StyledLabel>Drinks</StyledLabel>
+          <StyledLabel>Food</StyledLabel>
+          <div>
+            <StyledIcon src={drinkIcon}  />
+            <StyledSelect name="drinkPen" ref={register}>
+              <option value="0"> 0 </option>
+              <option value="1"> 1 </option>
+              <option value="2"> 2 </option>
+              <option value="3"> 3 </option>
+              <option value="4"> 4 </option>
+              <option value="5"> 5 </option>
+            </StyledSelect>
+          </div>
+          <div>
+            <StyledIcon src={foodIcon} />
+            <StyledSelect name="foodPen" ref={register}>
+              <option value="0"> 0 </option>
+              <option value="1"> 1 </option>
+              <option value="2"> 2 </option>
+              <option value="3"> 3 </option>
+              <option value="4"> 4 </option>
+              <option value="5"> 5 </option>
+            </StyledSelect>
+          </div>
+        </StyledFoodDrinkArea>
+      )} */}
 
       <StyledCheckinTitle  error={remainingCommentCount < 0} >
       <StyledLabel>Comment</StyledLabel> <p>{remainingCommentCount}</p>{" "}
       </StyledCheckinTitle>
-      <textarea rows="4" cols="40" name="comment" ref={register}></textarea>
+      <textarea rows="4" cols="40" name="comment" value={item.comment} ref={register}></textarea>
       {/* <StyledHeading> Total: {total} points </StyledHeading> */}
       <Button text="CHECKIN" type="submit"> </Button>
     </StyledForm>
   );
 };
 
-AddItemForm.propTypes = {
-
-  onSubmit: PropTypes.func.isRequired
-
+UpdateItemForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired
 };
 
-export default AddItemForm;
+export default UpdateItemForm;

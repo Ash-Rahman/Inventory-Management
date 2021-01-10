@@ -9,13 +9,14 @@ import Dash from "./Views/Dash";
 import Join from "./Views/Join";
 import Checkin from "./Views/Checkin";
 import CreateItem from "./Views/CreateItem";
+import UpdateItem from "./Views/UpdateItem";
 import Profile from "./Views/Profile";
 import Login from "./Views/Login";
 
 import useChallenge from "./services/firebase/useChallenge";
 import useAuth from "./services/firebase/useAuth";
 //import useCheckin from "./services/firebase/useCheckin";
-import useCheckin from "./services/firebase/useItem";
+import useItem from "./services/firebase/useItem";
 import firebase from "firebase/app"; // the firbase core lib
 import "firebase/auth"; // specific products
 import "firebase/firestore";
@@ -92,8 +93,10 @@ function App() {
     createCheckin,
     readCheckins,
     readComments,
+    updateCurrentItemUser,
+    getCheckinById,
     createComment,
-  } = useCheckin(firebase.firestore)
+  } = useItem(firebase.firestore)
 
   const {
     readChallenges
@@ -171,11 +174,14 @@ function App() {
             <Protected authenticated={isAuthenticated} path="/profile">
               <Profile  user={user} />
             </Protected>
-            <Protected authenticated={isAuthenticated} path="/checkin">
+            {/* <Protected authenticated={isAuthenticated} path="/checkin">
               <Checkin  createCheckin={createCheckin}  user={user} />
-            </Protected>
+            </Protected> */}
             <Protected authenticated={isAuthenticated} path="/createItem">
               <CreateItem  createCheckin={createCheckin}  user={user} />
+            </Protected>
+            <Protected authenticated={isAuthenticated} path="/updateItem">
+              <UpdateItem getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser} user={user} />
             </Protected>
           </Switch>
         </div>
