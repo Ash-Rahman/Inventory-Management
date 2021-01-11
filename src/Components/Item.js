@@ -113,6 +113,7 @@ const StyledDetailsArea = styled.div`
    margin-top: 2%;
    margin-bottom: 2%;
    min-height: 80px;
+   min-width: 200px;
    padding 3%;
    h6:nth-child(2) {
        margin-top: 5%
@@ -160,34 +161,34 @@ function Item(props) {
       <StyledDetailsArea>
         <InfoArea>
           <h6>
-            {checkin.userName} <StyledSpan> Checked In </StyledSpan>
+            <StyledSpan> Owned by: </StyledSpan> {checkin.owner}
           </h6>
-          <em> {moment(checkin.time.toDate()).fromNow()} </em>
+          <h6> Time </h6>
+          {moment(checkin.time.toDate()).format('ll')}
 
-            <h6>Item Name</h6>
-            {checkin.name}
+          <h6>Item Type</h6>
+          {checkin.type}
 
-            <h6>Item Description</h6>
-            {checkin.description}
+          <h6>Item Name</h6>
+          {checkin.name}
 
-            <h6>Item Unique Identifier</h6>
-            {checkin.uniqueIdentifier}
+          <h6>Item Description</h6>
+          {checkin.description}
 
-            <h6>Item Owner</h6>
-            {checkin.owner}
+          <h6>Item Unique Identifier</h6>
+          {checkin.uniqueIdentifier}
 
-            <h6>Item Location</h6>
-            {checkin.location}
+          <h6>Item Location</h6>
+          {checkin.location}
 
           <StyledButton>
             <Link to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </Link>
           </StyledButton>
           <StyledButton>
-          <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
+            <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
           </StyledButton>
         </InfoArea>
       </StyledDetailsArea>
-
       <StyledDivider />
 
      {/* {
