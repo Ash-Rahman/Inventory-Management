@@ -52,22 +52,26 @@ function Menu(props) {
             {" "}
             <Link to="/"> Dash </Link>{" "}
           </StyledLi>
-          <StyledLi active={location.pathname === "/profile"}>
+          {/* <StyledLi active={location.pathname === "/profile"}>
             {" "}
-            <Link to="/profile"> Profile </Link>{" "}
-          </StyledLi>
-          <StyledLi active={location.pathname === "/checkin"}>
+             <Link to="/profile"> Profile </Link>{" "}
+          </StyledLi> */}
+          {/* <StyledLi active={location.pathname === "/checkin"}>
             {" "}
-            <Link to="/checkin"> Checkin </Link>{" "}
-          </StyledLi>
+             <Link to="/checkin"> Checkin </Link>{" "}
+          </StyledLi> */}
           <StyledLi active={location.pathname === "/createItem"}>
             {" "}
             <Link to="/createItem"> Add Item </Link>{" "}
           </StyledLi>
-          <StyledLi active={location.pathname === "/updateItem"}>
+          {/* <StyledLi active={location.pathname === "/updateItem"}>
             {" "}
             <Link to="/updateItem"> Edit Item </Link>{" "}
           </StyledLi>
+          <StyledLi active={location.pathname === "/history"}>
+            {" "}
+            <Link to="/hitory"> History </Link>{" "}
+          </StyledLi> */}
         </ul>
       </StyledNav>
     </div>

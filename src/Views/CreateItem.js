@@ -48,7 +48,6 @@ const CreateItem = (props) => {
     const ckin = {
       ...checkin,
       ...{
-        photo: user.photoURL,
         userId: user.uid,
         userName: user.displayName || user.email,
         time: new Date(),

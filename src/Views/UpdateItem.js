@@ -39,10 +39,11 @@ const StyledThumbsUp = styled.div`
 `;
 
 const UpdateItem = (props) => {
-  const { user, updateCurrentItemUser, getCheckinById } = props;
+  const { user, updateCurrentItemUser, getCheckinById, createComment } = props;
   const location = useLocation();
-  const [checkedIn, setCheckedIn] = useState(false);
+  // const [checkedIn, setCheckedIn] = useState(false);
   const [item, setItemValue] = useState(0);
+  const [itemHistory, setItemHistory] = useState(0);
   const [gotItem, setGotItem] = useState(false);
   let history = useHistory();
 
@@ -53,7 +54,8 @@ const UpdateItem = (props) => {
       console.log("query2: ", location.query);
       let item = aItem.data();
       console.log("item: ", item);
-      setItemValue(item)
+      setItemValue(item);
+      setItemHistory(item);
       setGotItem(true);
     }
     getItem()
@@ -67,16 +69,15 @@ const UpdateItem = (props) => {
   // };
 
   const handleSubmit = async (checkin) => {
-    setCheckedIn(true);
     const ckin = {
       ...checkin,
       ...{
-        photo: user.photoURL,
         userId: user.uid,
         userName: user.displayName || user.email,
         time: new Date(),
       },
     };
+    await createComment(location.query.id, itemHistory);
     await updateCurrentItemUser(location.query.id, ckin);
     setTimeout(() => history.push('/'), 3000);
   };

@@ -8,9 +8,9 @@ function useItem(fStore) {
   const updateCurrentItemUser = (checkinID, item) => ref.doc(checkinID).update(item);
 
   // below we add the methods to create a sub collection to hold checkin comments
-  const createComment = (checkinID, comment) => ref.doc(checkinID).collection('comments').add(comment);
+  const createComment = (checkinID, comment) => ref.doc(checkinID).collection('history').add(comment);
 
-  const readComments = (checkinID) => ref.doc(checkinID).collection('comments').get();
+  const readComments = (checkinID) => ref.doc(checkinID).collection('history').get();
 
   return {createCheckin, readCheckins, createComment, readComments, getCheckinById, updateCurrentItemUser}
 }

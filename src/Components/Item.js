@@ -163,42 +163,28 @@ function Item(props) {
             {checkin.userName} <StyledSpan> Checked In </StyledSpan>
           </h6>
           <em> {moment(checkin.time.toDate()).fromNow()} </em>
+
             <h6>Item Name</h6>
             {checkin.name}
 
-            <h6>Item description</h6>
+            <h6>Item Description</h6>
             {checkin.description}
+
+            <h6>Item Unique Identifier</h6>
+            {checkin.uniqueIdentifier}
+
+            <h6>Item Owner</h6>
+            {checkin.owner}
 
             <h6>Item Location</h6>
             {checkin.location}
 
-
-          {/* <h6> Total</h6>
-          <StyledScoreArea>
-            {" "}
-            <h3>{checkin.total}</h3>{" "}
-            <div style={{ width: "100%", height: "90%" }}>
-              <Histogram barCount={7} bars={[10, 10, 10, 10, 10, 10, 10]} />
-            </div>
-          </StyledScoreArea> */}
-
-          {/* <ItemButton active={location.pathname === "/createItem"}>
-            {" "}
-            History
-          </ItemButton> */}
-
-          {/* <Link to={{pathname: "/createItem", data: checkin}}> History </Link>{" "} */}
           <StyledButton>
-            {/* <Link to={{pathname: "/updateItem", data: checkin.name}}> Update </Link> */}
             <Link to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </Link>
           </StyledButton>
           <StyledButton>
-            <Link to="/createItem"> History </Link>
+          <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
           </StyledButton>
-
-
-          {/* <Link text="Update" type="submit"> </Link>
-          <Link text="Check Out" type="submit"> </Link> */}
         </InfoArea>
       </StyledDetailsArea>
 

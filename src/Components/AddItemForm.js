@@ -92,28 +92,30 @@ const AddItemForm = props => {
   const maxCommentLength = 5;
 
   const checkinFormSchema = yup.object().shape({
-    uniqueIdentifier: yup.string(),
-    name: yup.string().required("you must name this item"),
     type: yup.string().required("you must give this an item type"),
+    name: yup.string().required("you must name this item"),
+    uniqueIdentifier: yup.string(),
     description: yup.string().required("you must give this item a description"),
-    location: yup.string().required("you must tell us the current location of the item")
+    location: yup.string().required("you must tell us the current location of the item"),
+    action: yup.string().required("you must give this an item type"),
+    owner: yup.string(),
   });
 
   const { register, handleSubmit, errors, watch } = useForm({
     validationSchema: checkinFormSchema,
-    defaultValues: {comment: "", type: "", uniqueIdentifier: "", name: "", description: "", location: ""}
+    defaultValues: {type: "", name: "", uniqueIdentifier: "",  description: "", location: "", action: "createdItem", owner: ""}
   });
 
-  const comment = watch('comment');
+  //const comment = watch('comment');
 
-  const [remainingCommentCount, setRemainingCommentCount] = useState(maxCommentLength);
+  //const [remainingCommentCount, setRemainingCommentCount] = useState(maxCommentLength);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-      setRemainingCommentCount(maxCommentLength - comment.length);
+  //     setRemainingCommentCount(maxCommentLength - comment.length);
 
-  }, [comment])
+  // }, [comment])
 
   //  const formValues = watch();
   //  let checkinScore = {
@@ -151,10 +153,7 @@ const AddItemForm = props => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
-      {/*JSON.stringify("this is the" + diet)*/}
       <StyledLabel>Item Type*</StyledLabel>
-
-        {/* <textarea rows="4" cols="40" name="type" ref={register}></textarea> */}
         <StyledFoodDrinkArea>
           <div>
             <StyledSelect name="type" ref={register}>
@@ -166,7 +165,6 @@ const AddItemForm = props => {
             </StyledSelect>
           </div>
         </StyledFoodDrinkArea>
-
       <ErrorLabel> {errors.type && errors.type.message} </ErrorLabel>
 
       <StyledLabel>Item Name*</StyledLabel>
@@ -193,10 +191,22 @@ const AddItemForm = props => {
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      <StyledCheckinTitle  error={remainingCommentCount < 0} >
+      <StyledLabel>Item action*</StyledLabel>
+      <StyledCheckinP>
+        <textarea rows="4" cols="40" name="action" value="createdItem" ref={register}></textarea>
+      </StyledCheckinP>
+      <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
+
+      <StyledLabel>Item Owner*</StyledLabel>
+      <StyledCheckinP>
+        <textarea rows="4" cols="40" name="owner" value="" ref={register}></textarea>
+      </StyledCheckinP>
+      <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
+
+      {/* <StyledCheckinTitle  error={remainingCommentCount < 0} >
       <StyledLabel>Comment</StyledLabel> <p>{remainingCommentCount}</p>{" "}
       </StyledCheckinTitle>
-      <textarea rows="4" cols="40" name="comment" ref={register}></textarea>
+      <textarea rows="4" cols="40" name="comment" ref={register}></textarea> */}
       {/* <StyledHeading> Total: {total} points </StyledHeading> */}
       <Button text="CHECKIN" type="submit"> </Button>
     </StyledForm>

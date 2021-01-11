@@ -113,55 +113,38 @@ const UpdateItemForm = props => {
   const maxCommentLength = 5;
 
   const checkinFormSchema = yup.object().shape({
-    uniqueIdentifier: yup.string(),
-    name: yup.string().required("you must name this item"),
     type: yup.string().required("you must give this an item type"),
+    name: yup.string().required("you must name this item"),
+    uniqueIdentifier: yup.string(),
     description: yup.string().required("you must give this item a description"),
-    location: yup.string().required("you must tell us the current location of the item")
+    location: yup.string().required("you must tell us the current location of the item"),
+    action: yup.string().required("you must give this an item action"),
+    owner: yup.string()
   });
+
+  let owner;
+
+  if (item.owner == "") {
+    owner = "None"
+  } else {
+    owner = item.owner
+  }
 
   const { register, handleSubmit, errors, watch } = useForm({
     validationSchema: checkinFormSchema,
-    defaultValues: {comment: item.comment, type: item.type, uniqueIdentifier: item.uniqueIdentifier, name: item.name, description: item.description, location: item.location}
+    defaultValues: {type: item.type, name: item.name, uniqueIdentifier: item.uniqueIdentifier,  description: item.description, location: item.location, action: "updatedItemInfo", owner: owner}
   });
 
-  const comment = watch('comment');
+  // const comment = watch('comment');
 
   const [remainingCommentCount, setRemainingCommentCount] = useState(maxCommentLength);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-      setRemainingCommentCount(maxCommentLength - comment.length);
+  //     setRemainingCommentCount(maxCommentLength - comment.length);
 
-  }, [comment])
-
-  //  const formValues = watch();
-  //  let checkinScore = {
-  //     exercise: 0,
-  //     veg: 0,
-  //     water: 0,
-  //     diet: 0
-  //  }
-
-  //  useEffect(() => {
-
-  //   checkinScore.exercise = !formValues.exercise ? 0 : parseInt(formValues.exercise);
-  //   checkinScore.veg = !formValues.veg ? 0 : parseInt(formValues.veg);
-  //   checkinScore.water = !formValues.water ? 0 : parseInt(formValues.water);
-
-  //   if (formValues.diet !== "") {
-
-  //     checkinScore.diet = formValues.diet === "0" ? 10 - (parseInt(formValues.foodPen) + parseInt(formValues.drinkPen)) : parseInt(formValues.diet);
-
-  //   }
-
-  //   setTotal(checkinScore.exercise + checkinScore.veg + checkinScore.water + checkinScore.diet);
-
-
-  //  }, [formValues])
-
-
+  // }, [comment])
 
   const diet = watch("diet");
 
@@ -205,40 +188,18 @@ const UpdateItemForm = props => {
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      {/* {diet === "0" && (
-        <StyledFoodDrinkArea>
-          <StyledLabel>Drinks</StyledLabel>
-          <StyledLabel>Food</StyledLabel>
-          <div>
-            <StyledIcon src={drinkIcon}  />
-            <StyledSelect name="drinkPen" ref={register}>
-              <option value="0"> 0 </option>
-              <option value="1"> 1 </option>
-              <option value="2"> 2 </option>
-              <option value="3"> 3 </option>
-              <option value="4"> 4 </option>
-              <option value="5"> 5 </option>
-            </StyledSelect>
-          </div>
-          <div>
-            <StyledIcon src={foodIcon} />
-            <StyledSelect name="foodPen" ref={register}>
-              <option value="0"> 0 </option>
-              <option value="1"> 1 </option>
-              <option value="2"> 2 </option>
-              <option value="3"> 3 </option>
-              <option value="4"> 4 </option>
-              <option value="5"> 5 </option>
-            </StyledSelect>
-          </div>
-        </StyledFoodDrinkArea>
-      )} */}
+      <StyledLabel>Item action*</StyledLabel>
+      <StyledCheckinP>
+        <textarea rows="4" cols="40" name="action" value="updatedItemInfo" ref={register}></textarea>
+      </StyledCheckinP>
+      <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      <StyledCheckinTitle  error={remainingCommentCount < 0} >
-      <StyledLabel>Comment</StyledLabel> <p>{remainingCommentCount}</p>{" "}
-      </StyledCheckinTitle>
-      <textarea rows="4" cols="40" name="comment" value={item.comment} ref={register}></textarea>
-      {/* <StyledHeading> Total: {total} points </StyledHeading> */}
+      <StyledLabel>Item Owner*</StyledLabel>
+      <StyledCheckinP>
+        <textarea rows="4" cols="40" name="owner" value={owner} ref={register}></textarea>
+      </StyledCheckinP>
+      <ErrorLabel> {errors.owner && errors.owner.message} </ErrorLabel>
+
       <Button text="CHECKIN" type="submit"> </Button>
     </StyledForm>
   );

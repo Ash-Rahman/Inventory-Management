@@ -10,6 +10,7 @@ import Join from "./Views/Join";
 import Checkin from "./Views/Checkin";
 import CreateItem from "./Views/CreateItem";
 import UpdateItem from "./Views/UpdateItem";
+import History from "./Views/History";
 import Profile from "./Views/Profile";
 import Login from "./Views/Login";
 
@@ -171,9 +172,9 @@ function App() {
                   signInEmailUser={signInEmailUser}
                 />
             </RedirectToDash>
-            <Protected authenticated={isAuthenticated} path="/profile">
+            {/* <Protected authenticated={isAuthenticated} path="/profile">
               <Profile  user={user} />
-            </Protected>
+            </Protected> */}
             {/* <Protected authenticated={isAuthenticated} path="/checkin">
               <Checkin  createCheckin={createCheckin}  user={user} />
             </Protected> */}
@@ -181,8 +182,11 @@ function App() {
               <CreateItem  createCheckin={createCheckin}  user={user} />
             </Protected>
             <Protected authenticated={isAuthenticated} path="/updateItem">
-              <UpdateItem getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser} user={user} />
+              <UpdateItem getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser} user={user} createComment={createComment} />
             </Protected>
+            {/* <Protected authenticated={isAuthenticated} path="/history">
+              <History getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser} user={user} createComment={createComment} />
+            </Protected> */}
           </Switch>
         </div>
       </ThemeProvider>
