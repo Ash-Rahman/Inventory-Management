@@ -113,7 +113,7 @@ const StyledDetailsArea = styled.div`
    margin-top: 2%;
    margin-bottom: 2%;
    min-height: 80px;
-   min-width: 200px;
+   min-width: 230px;
    padding 3%;
    h6:nth-child(2) {
        margin-top: 5%
@@ -127,6 +127,8 @@ function Item(props) {
  const {checkin,  userProfilePicture, user, onComment, readComments} = props;
  const [comment, setComment]= useState("");
  const [comments, setComments]= useState([]);
+ const [itemHistory, setItemHistory] = useState(0);
+ const [item, setItemValue] = useState(0);
 
  const readAllComment = async () => {
   const commentsRef =  await readComments(checkin.id);
@@ -137,6 +139,22 @@ function Item(props) {
  useEffect(() => {
    readAllComment();
  }, [])
+
+//  setItemHistory(checkin);
+
+//   const handleSubmit = async (checkin) => {
+//     const ckin = {
+//       ...checkin,
+//       ...{
+//         userId: user.uid,
+//         userName: user.displayName || user.email,
+//         time: new Date(),
+//       },
+//     };
+//     await createComment(checkin.id, itemHistory);
+//     await updateCurrentItemUser(checkin.id, ckin);
+//     setTimeout(() => history.push('/'), 3000);
+//   };
 
 //  const handleKeyPress = (e) => {
 
@@ -163,7 +181,7 @@ function Item(props) {
           <h6>
             <StyledSpan> Owned by: </StyledSpan> {checkin.owner}
           </h6>
-          <h6> Time </h6>
+          <h6>Time</h6>
           {moment(checkin.time.toDate()).format('ll')}
 
           <h6>Item Type</h6>
@@ -187,6 +205,9 @@ function Item(props) {
           <StyledButton>
             <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
           </StyledButton>
+          {/* <StyledButton>
+            <ItemButton > Check Out </ItemButton>
+          </StyledButton> */}
         </InfoArea>
       </StyledDetailsArea>
       <StyledDivider />

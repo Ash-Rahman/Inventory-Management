@@ -69,6 +69,16 @@ const UpdateItem = (props) => {
   // };
 
   const handleSubmit = async (checkin) => {
+    if(checkin.owner == "Me" || checkin.owner == "") {
+      checkin.owner = user.email;
+    }
+    if(checkin.owner == "Keep Same") {
+      checkin.owner = item.owner;
+    }
+    if(checkin.owner == "None") {
+      checkin.owner = "None";
+    }
+
     const ckin = {
       ...checkin,
       ...{

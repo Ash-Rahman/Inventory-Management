@@ -88,7 +88,30 @@ const StyledCheckinTitle = styled.div`
 
 const UpdateItemForm = props => {
 
+  const ownerOptions = [
+    'Keep Same', 'Me', 'None'
+  ];
+
+  const typeOptions = [
+    'Card', 'Cable', 'Cd', 'USB', 'Server'
+  ];
+
   const {onSubmit, item} = props;
+  const [type, setTypeValue] = useState(item.type);
+  const [name, setNameValue] = useState(item.name);
+  const [uniqueIdentifier, setUniqueIdentifierValue] = useState(item.uniqueIdentifier);
+  const [description, setDescriptionValue] = useState(item.description);
+  const [location, setLocationValue] = useState(item.location);
+  const [action, setActionValue] = useState(item.action);
+  const [owner, setOwnerValue] = useState(ownerOptions[0]);
+
+
+  const handleFilterInput = (event) => {
+    let value = event.target.ownerOptions;
+    setOwnerValue(value);
+    // props.handleRegionSearch(value);
+  };
+
   // console.log("I got item form ", item);
   // const location = useLocation();
 
@@ -122,17 +145,9 @@ const UpdateItemForm = props => {
     owner: yup.string()
   });
 
-  let owner;
-
-  if (item.owner == "") {
-    owner = "None"
-  } else {
-    owner = item.owner
-  }
-
   const { register, handleSubmit, errors, watch } = useForm({
     validationSchema: checkinFormSchema,
-    defaultValues: {type: item.type, name: item.name, uniqueIdentifier: item.uniqueIdentifier,  description: item.description, location: item.location, action: "updatedItemInfo", owner: owner}
+    defaultValues: {type: item.type, name: "", uniqueIdentifier: "",  description: "", location: "", action: "", owner: ownerOptions[0]}
   });
 
   // const comment = watch('comment');
@@ -156,48 +171,71 @@ const UpdateItemForm = props => {
   return (
 
     <StyledForm onSubmit={handleSubmit(onFormSubmit)}>
-      {/*JSON.stringify("this is the" + diet)*/}
-
       <StyledLabel>Item Type*</StyledLabel>
-      <StyledCheckinP>
-        <textarea rows="4" cols="40" name="type" value={item.type} ref={register}> </textarea>
-      </StyledCheckinP>
-      <ErrorLabel> {errors.type && errors.name.type} </ErrorLabel>
+        <StyledFoodDrinkArea>
+          <div>
+            <StyledSelect name="type" ref={register}>
+              <option onChange={e => setTypeValue(e.target.value)} value={item.type}> {item.type} </option>
+              <option onChange={e => setTypeValue(e.target.value)} value={typeOptions[0]}> {typeOptions[0]} </option>
+              <option onChange={e => setTypeValue(e.target.value)} value={typeOptions[1]}> {typeOptions[1]} </option>
+              <option onChange={e => setTypeValue(e.target.value)} value={typeOptions[2]}> {typeOptions[2]} </option>
+              <option onChange={e => setTypeValue(e.target.value)} value={typeOptions[3]}> {typeOptions[3]} </option>
+              <option onChange={e => setTypeValue(e.target.value)} value={typeOptions[4]}> {typeOptions[4]} </option>
+            </StyledSelect>
+          </div>
+        </StyledFoodDrinkArea>
+      <ErrorLabel> {errors.type && errors.type.message} </ErrorLabel>
 
       <StyledLabel>Item Name*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="name"  ref={register}> </textarea>
+        <textarea onChange={e => setNameValue(e.target.value)}
+                  value={name} rows="4" cols="40" name="name"  ref={register}>
+        </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.name && errors.name.message} </ErrorLabel>
 
       <StyledLabel>Item Unique Identifier (e.g Serial Number)</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="uniqueIdentifier" ref={register}> </textarea>
+        <textarea onChange={e => setUniqueIdentifierValue(e.target.value)}
+                  value={uniqueIdentifier} rows="4" cols="40" name="uniqueIdentifier"  ref={register}>
+        </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.uniqueIdentifier && errors.uniqueIdentifier.message} </ErrorLabel>
 
       <StyledLabel>Item Description*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="description" ref={register}>  </textarea>
+        <textarea onChange={e => setDescriptionValue(e.target.value)}
+                  value={description} rows="4" cols="40" name="description"  ref={register}>
+        </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.description && errors.description.message} </ErrorLabel>
 
       <StyledLabel>Item Location*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="location" ref={register}>  </textarea>
+        <textarea onChange={e => setLocationValue(e.target.value)}
+                  value={location} rows="4" cols="40" name="location"  ref={register}>
+        </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
       <StyledLabel>Item action*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="action" value="updatedItemInfo" ref={register}></textarea>
+        <textarea onChange={e => setActionValue(e.target.value)}
+                  value={action} rows="4" cols="40" name="action"  ref={register}>
+        </textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
       <StyledLabel>Item Owner*</StyledLabel>
-      <StyledCheckinP>
-        <textarea rows="4" cols="40" name="owner" value={owner} ref={register}></textarea>
-      </StyledCheckinP>
+      <StyledFoodDrinkArea>
+          <div>
+            <StyledSelect name="owner" ref={register}>
+              <option onChange={e => setOwnerValue(e.target.value)} value={ownerOptions[0]}> Keep Same </option>
+              <option onChange={e => setOwnerValue(e.target.value)} value={ownerOptions[1]}> Me </option>
+              <option onChange={e => setOwnerValue(e.target.value)} value={ownerOptions[2]}> None </option>
+            </StyledSelect>
+          </div>
+      </StyledFoodDrinkArea>
       <ErrorLabel> {errors.owner && errors.owner.message} </ErrorLabel>
 
       <Button text="CHECKIN" type="submit"> </Button>
