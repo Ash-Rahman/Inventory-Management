@@ -74,15 +74,69 @@ function Dash(props) {
   margin-top: 6%;
   border: none;
 `;
+
+  const StyledHeading = styled.h2`
+  text-align: center;
+  color: ${ props => props.theme.colors.purple};
+  `;
+
+  const FlexContainer = styled.div`
+    display: flex;
+  `;
+
+  const FlexChild = styled.div`
+  flex: 1;
+  border: 2px solid yellow;
+  width: 30%;
+  justify-content: center;
+  align-items: center;
+  h6:nth-child(2) {
+    margin-top: 30%
+  },
+  `;
+
+  const StyledDetailsArea = styled.div`
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-column-gap: 5%;
+    grid-row-gap: 40px;
+    align-items: center;
+    textarea {
+        border-radius: 4px;
+        border: 1px solid ${({ theme }) => theme.colors.darkShade[25]};
+    }`;
+
   let itemID = 0;
   //console.log(JSON.stringify(allCheckins));
   return (
     <div>
-      <DaysCompleted days={daysComplete} percentageComplete={percentageComplete}  checkins={allCheckins.filter(c => c.userId === user.uid)}/>
+      <StyledHeading> Your Checked-Out Items! </StyledHeading>
       {
-        allCheckins.map( (c) => <Item onComment={handleComment} userProfilePicture={user.photoURL || avatarPlaceHolder}  user={user} checkin={c}  readComments={readComments} />
-        )
 
+          <StyledDetailsArea>
+          {
+            allCheckins.filter(c => c.owner === user.email).map( (c) =>
+
+                <Item onComment={handleComment} userProfilePicture={user.photoURL || avatarPlaceHolder}  user={user} checkin={c}  readComments={readComments}/>
+
+            )
+          }
+          </StyledDetailsArea>
+
+      }
+      {/* //allCheckins.filter(c => c.owner === user.email) */}
+      <StyledHeading> All Items </StyledHeading>
+      {
+         <StyledDetailsArea>
+         {/* //allCheckins.filter(c => c.owner === user.email) */}
+         {
+            allCheckins.filter(c => c.owner != user.email).map( (c) =>
+
+              <Item onComment={handleComment} userProfilePicture={user.photoURL || avatarPlaceHolder}  user={user} checkin={c}  readComments={readComments}/>
+
+            )
+         }
+         </StyledDetailsArea>
       }
 
       {/* <StyledButton>

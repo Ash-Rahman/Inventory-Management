@@ -199,7 +199,7 @@ const AddItemForm = props => {
 
       <StyledLabel>Item Owner*</StyledLabel>
       <StyledCheckinP>
-        <textarea rows="4" cols="40" name="owner" value="" ref={register}></textarea>
+        <textarea rows="4" cols="40" name="owner" value="None" ref={register}></textarea>
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 

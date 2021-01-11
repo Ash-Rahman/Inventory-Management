@@ -42,7 +42,6 @@ const StyledDetailsArea = styled.div`
     }`;
 
 
-
   const StyledSpan = styled.span`
     color: ${({ theme }) => theme.colors.purple};
   `;
@@ -86,8 +85,6 @@ const StyledDetailsArea = styled.div`
    h6:nth-child(2) {
        margin-top: 5%
    },
-
-
   `;
 
   const StyledButton = styled.button`
@@ -106,7 +103,6 @@ const StyledDetailsArea = styled.div`
 
 
   const InfoArea = styled.div`
-
    border-radius: 15px;
    background-color: ${({ theme }) => theme.colors.grey};
    width: 100%;
@@ -118,9 +114,20 @@ const StyledDetailsArea = styled.div`
    h6:nth-child(2) {
        margin-top: 5%
    },
-
-
   `;
+  // h6:nth-child(2) {
+  //   margin-right: 5%
+  // },
+  const InfoArea2 = styled.div`
+  border-radius: 15px;
+  width: 30%;
+  background-color: ${({ theme }) => theme.colors.grey};
+  min-height: 80px;
+  min-width: 230px;
+  padding 3%;
+  margin-left: 10px;
+  margin-top: 1%;
+ `;
 
 function Item(props) {
 
@@ -175,12 +182,16 @@ function Item(props) {
   //console.log(JSON.stringify(checkin));
 
   return (
-    <Tile elevation="0.06">
-      <StyledDetailsArea>
-        <InfoArea>
+
+
+        <InfoArea2>
           <h6>
-            <StyledSpan> Owned by: </StyledSpan> {checkin.owner}
+            <StyledSpan> Owned by: </StyledSpan>
           </h6>
+
+          <h6>{checkin.owner}</h6>
+
+
           <h6>Time</h6>
           {moment(checkin.time.toDate()).format('ll')}
 
@@ -208,51 +219,9 @@ function Item(props) {
           {/* <StyledButton>
             <ItemButton > Check Out </ItemButton>
           </StyledButton> */}
-        </InfoArea>
-      </StyledDetailsArea>
-      <StyledDivider />
-
-     {/* {
-       comments.map((c, i) => (<StyledDetailsArea>
-        <img
-          src={c.photo}
-          style={{  marginBottom: 10, marginRight: 10, width: "50px", height: "50px",     borderRadius: '50%'}}
-          alt="avatar"
-        />
-
-        <CommentArea>
-
-          <h6>
-            {c.userName} <em>  {moment(c.time.toDate()).fromNow()} </em>
-          </h6>
-
-        <h6> {c.message}</h6>
-        </CommentArea>
-      </StyledDetailsArea>))
-     } */}
+        </InfoArea2>
 
 
-
-
-      {/* <StyledDetailsArea>
-        <img
-          src={userProfilePicture}
-          style={{  marginBottom: 10, marginRight: 10, width: "50px", height: "50px",     borderRadius: '50%'}}
-          alt="avatar"
-        />
-
-        <textarea rows="4"
-                  onChange={e => setComment(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  value={comment}
-        >
-
-        </textarea>
-
-
-
-      </StyledDetailsArea> */}
-    </Tile>
   );
 }
 

@@ -28,7 +28,6 @@ function History(props) {
   //  }
 
   useEffect(() => {
-
     const getAllCheckins =  async () => {
       const aCheckins =  await readCheckins();
       let checkins = [];
