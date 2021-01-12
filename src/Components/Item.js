@@ -7,9 +7,10 @@ import styled from "styled-components";
 import avatarSmall from "../assets/avatar_small.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import ItemButton from "../Components/ItemButton";
 import Histogram from "./Histogram";
+
 
 function LikeButton(props) {
   const StyledDiv = styled.div`
@@ -35,6 +36,7 @@ function LikeButton(props) {
 const StyledDetailsArea = styled.div`
     display: grid;
     grid-template-columns: 0.2fr 3fr;
+    color: #252F36;
 
     textarea {
         border-radius: 4px;
@@ -89,7 +91,7 @@ const StyledDetailsArea = styled.div`
 
   const StyledButton = styled.button`
   height: 44.63px;
-  background: linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
+  background: ${({ theme }) => theme.colors.blue};
   border-radius: 22px;
   color: white;
   display: flex;
@@ -121,7 +123,7 @@ const StyledDetailsArea = styled.div`
   const InfoArea2 = styled.div`
   border-radius: 15px;
   width: 30%;
-  background-color: ${({ theme }) => theme.colors.grey};
+  background-color: ${({ theme }) => theme.colors.lightBlue};
   min-height: 80px;
   min-width: 230px;
   padding 3%;
@@ -131,21 +133,50 @@ const StyledDetailsArea = styled.div`
 
 function Item(props) {
 
- const {checkin,  userProfilePicture, user, onComment, readComments} = props;
- const [comment, setComment]= useState("");
- const [comments, setComments]= useState([]);
- const [itemHistory, setItemHistory] = useState(0);
- const [item, setItemValue] = useState(0);
+  const {checkin, user, readComments, updateCurrentItemUser, createComment, forHistory} = props;
+  const [comment, setComment]= useState("");
+  const [comments, setComments]= useState([]);
+  const [itemHistory, setItemHistory] = useState(0);
+  const [isForHistory, setisForHistory] = useState(false);
 
- const readAllComment = async () => {
-  const commentsRef =  await readComments(checkin.id);
-  const comments = [];
-  commentsRef.forEach(c => {comments.push(c.data())});
-   setComments(comments);
- }
- useEffect(() => {
+  const readAllComment = async () => {
+    const commentsRef =  await readComments(checkin.id);
+    const comments = [];
+    commentsRef.forEach(c => {comments.push(c.data())});
+     setComments(comments);
+  }
+  useEffect(() => {
    readAllComment();
- }, [])
+  }, [])
+
+  let history = useHistory();
+  if(forHistory) {
+    setisForHistory(true);
+  }
+
+  const handleCheckoutUpdate = async () => {
+    if(checkin) {
+      setItemHistory(checkin);
+    }
+    if(checkin.owner == user.email) {
+      checkin.owner = "None";
+    }
+    if(checkin.owner != user.email) {
+      checkin.owner = user.email;
+    }
+
+    const ckin = {
+      ...checkin,
+      ...{
+        userId: user.uid,
+        userName: user.displayName || user.email,
+        time: new Date(),
+      },
+    };
+    await createComment(checkin.id, itemHistory);
+    await updateCurrentItemUser(checkin.id, ckin);
+    setTimeout(() => history.push('/'), 3000);
+  };
 
 //  setItemHistory(checkin);
 
@@ -182,15 +213,11 @@ function Item(props) {
   //console.log(JSON.stringify(checkin));
 
   return (
-
-
         <InfoArea2>
           <h6>
             <StyledSpan> Owned by: </StyledSpan>
+            {checkin.owner}
           </h6>
-
-          <h6>{checkin.owner}</h6>
-
 
           <h6>Time</h6>
           {moment(checkin.time.toDate()).format('ll')}
@@ -210,25 +237,45 @@ function Item(props) {
           <h6>Item Location</h6>
           {checkin.location}
 
-          <StyledButton>
-            <Link to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </Link>
-          </StyledButton>
-          <StyledButton>
-            <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
-          </StyledButton>
-          {/* <StyledButton>
-            <ItemButton > Check Out </ItemButton>
-          </StyledButton> */}
+
+
+            <React.Fragment>
+              <StyledButton>
+                <Link to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </Link>
+              </StyledButton>
+              <StyledButton>
+                <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
+              </StyledButton>
+              <StyledButton onClick={handleCheckoutUpdate}>
+                Checkin/Checkout
+              </StyledButton>
+            </React.Fragment>
         </InfoArea2>
 
 
   );
 }
 
+// {!isForHistory ? (
+//   <React.Fragment>
+//   <StyledButton>
+//     <Link to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </Link>
+//   </StyledButton>
+//   <StyledButton>
+//     <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
+//   </StyledButton>
+//   <StyledButton onClick={handleCheckoutUpdate}>
+//     Checkin/Checkout
+//   </StyledButton>
+//   </React.Fragment>
+// ): (<React.Fragment></React.Fragment>)}
+
 Item.propTypes = {
   checkin: PropTypes.object.isRequired,
   onComment: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  updateCurrentItemUser: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 

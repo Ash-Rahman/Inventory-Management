@@ -33,14 +33,11 @@ function LikeButton(props) {
 const StyledDetailsArea = styled.div`
     display: grid;
     grid-template-columns: 0.2fr 3fr;
-    
     textarea {
         border-radius: 4px;
         border: 1px solid ${({ theme }) => theme.colors.darkShade[25]};
     }`;
 
-
-    
   const StyledSpan = styled.span`
     color: ${({ theme }) => theme.colors.purple};
   `;
@@ -60,7 +57,7 @@ const StyledDetailsArea = styled.div`
   `;
 
   const StyledScoreArea = styled.div`
-    
+
     display: flex;
     flex-direction: row;
     h3 {
@@ -73,7 +70,7 @@ const StyledDetailsArea = styled.div`
   `;
 
   const CommentArea = styled.div`
-  
+
    border-radius: 15px;
    background-color: ${({ theme }) => theme.colors.grey};
    width: 95%;
@@ -85,11 +82,11 @@ const StyledDetailsArea = styled.div`
        margin-top: 5%
    },
 
-   
+
   `;
 
 function Checkin(props) {
-  
+
  const {checkin,  userProfilePicture, user, onComment, readComments} = props;
  const [comment, setComment]= useState("");
  const [comments, setComments]= useState([]);
@@ -104,8 +101,8 @@ function Checkin(props) {
    readAllComment();
  }, [])
 
- const handleKeyPress = (e) => { 
-    
+ const handleKeyPress = (e) => {
+
     if(e.key === 'Enter' && comment) {
       const commentRecord =   {
         photo: user.photoURL || avatarPlaceHolder,
@@ -150,7 +147,7 @@ function Checkin(props) {
         </StyledCheckinArea>
       </StyledDetailsArea>
       <StyledDivider />
-       
+
      {
        comments.map((c, i) => (<StyledDetailsArea>
         <img
@@ -160,18 +157,18 @@ function Checkin(props) {
         />
 
         <CommentArea>
-                  
+
           <h6>
             {c.userName} <em>  {moment(c.time.toDate()).fromNow()} </em>
           </h6>
 
         <h6> {c.message}</h6>
         </CommentArea>
-      </StyledDetailsArea>)) 
+      </StyledDetailsArea>))
      }
 
 
-      
+
 
       <StyledDetailsArea>
         <img
@@ -180,15 +177,15 @@ function Checkin(props) {
           alt="avatar"
         />
 
-        <textarea rows="4" 
-                  onChange={e => setComment(e.target.value)} 
+        <textarea rows="4"
+                  onChange={e => setComment(e.target.value)}
                   onKeyPress={handleKeyPress}
                   value={comment}
-        > 
+        >
 
         </textarea>
-       
-      
+
+
 
       </StyledDetailsArea>
     </Tile>
@@ -199,7 +196,7 @@ Checkin.propTypes = {
   checkin: PropTypes.object.isRequired,
   onComment: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  
+
 };
 
 

@@ -10,7 +10,7 @@ import * as dayjs from 'dayjs';
 
 function Dash(props) {
 
-  const { user, readCheckins, readChallenges, createComment, readComments } = props;
+  const {user, readCheckins, readChallenges, createComment, readComments, updateCurrentItemUser} = props;
   const [allCheckins, setAllCheckins] = useState([]);
   const [daysComplete, setDaysComplete] = useState(0);
   const [percentageComplete, setPercentageComplete] = useState(0);
@@ -77,7 +77,8 @@ function Dash(props) {
 
   const StyledHeading = styled.h2`
   text-align: center;
-  color: ${ props => props.theme.colors.purple};
+  background-color: ${({ theme }) => theme.colors.darkBlue};
+  color: ${ props => props.theme.colors.white};
   `;
 
   const FlexContainer = styled.div`
@@ -101,6 +102,7 @@ function Dash(props) {
     grid-column-gap: 5%;
     grid-row-gap: 40px;
     align-items: center;
+    background-color: ${({ theme }) => theme.colors.darkBlue};
     textarea {
         border-radius: 4px;
         border: 1px solid ${({ theme }) => theme.colors.darkShade[25]};
@@ -117,7 +119,10 @@ function Dash(props) {
           {
             allCheckins.filter(c => c.owner === user.email).map( (c) =>
 
-                <Item onComment={handleComment} userProfilePicture={user.photoURL || avatarPlaceHolder}  user={user} checkin={c}  readComments={readComments}/>
+                <Item onComment={handleComment} user={user} checkin={c}
+                      readComments={readComments} createComment={createComment}
+                      updateCurrentItemUser={updateCurrentItemUser}
+                />
 
             )
           }
@@ -132,19 +137,12 @@ function Dash(props) {
          {
             allCheckins.filter(c => c.owner != user.email).map( (c) =>
 
-              <Item onComment={handleComment} userProfilePicture={user.photoURL || avatarPlaceHolder}  user={user} checkin={c}  readComments={readComments}/>
+              <Item onComment={handleComment} user={user} checkin={c}  readComments={readComments}/>
 
             )
          }
          </StyledDetailsArea>
       }
-
-      {/* <StyledButton>
-        <Link to={{pathname: '/updateItem', state: {id: itemID}}}> Update Item </Link>
-      </StyledButton>
-      <StyledButton>
-        <Link to="/createItem"> History </Link>
-      </StyledButton> */}
 
     </div>
   );

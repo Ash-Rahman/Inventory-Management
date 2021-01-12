@@ -145,7 +145,9 @@ function App() {
         >
           <Switch>
             <Protected authenticated={isAuthenticated} exact path="/">
-              <Dash user={user} readComments={readComments} createComment={createComment} readCheckins={readCheckins} readChallenges={readChallenges} />
+              <Dash user={user} readComments={readComments} createComment={createComment}
+                    readCheckins={readCheckins} readChallenges={readChallenges}
+                    updateCurrentItemUser={updateCurrentItemUser}/>
             </Protected>
             <RedirectToDash authenticated={isAuthenticated} path="/join">
 
@@ -181,12 +183,18 @@ function App() {
             <Protected authenticated={isAuthenticated} path="/createItem">
               <CreateItem  createCheckin={createCheckin}  user={user} />
             </Protected>
+
             <Protected authenticated={isAuthenticated} path="/updateItem">
-              <UpdateItem getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser} user={user} createComment={createComment} />
+              <UpdateItem getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser}
+              user={user} createComment={createComment} />
             </Protected>
-            {/* <Protected authenticated={isAuthenticated} path="/history">
-              <History getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser} user={user} createComment={createComment} />
-            </Protected> */}
+
+            <Protected authenticated={isAuthenticated} path="/history">
+              <History readCheckins={readCheckins} readComments={readComments}
+              getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser}
+              user={user} createComment={createComment}  />
+            </Protected>
+
           </Switch>
         </div>
       </ThemeProvider>

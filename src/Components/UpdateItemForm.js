@@ -105,13 +105,6 @@ const UpdateItemForm = props => {
   const [action, setActionValue] = useState(item.action);
   const [owner, setOwnerValue] = useState(ownerOptions[0]);
 
-
-  const handleFilterInput = (event) => {
-    let value = event.target.ownerOptions;
-    setOwnerValue(value);
-    // props.handleRegionSearch(value);
-  };
-
   // console.log("I got item form ", item);
   // const location = useLocation();
 
