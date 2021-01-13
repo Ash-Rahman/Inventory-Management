@@ -7,6 +7,9 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as dayjs from 'dayjs';
 
+import moment from "moment";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function History(props) {
 
@@ -70,45 +73,12 @@ function History(props) {
 
     getAllHistory();
     //getAllChallenges();
-
-
-
   }, [])
-
-
-  const StyledButton = styled.button`
-  height: 44.63px;
-  background: linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
-  border-radius: 22px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: right;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 6%;
-  border: none;
-`;
 
   const StyledHeading = styled.h2`
   text-align: center;
   background-color: ${({ theme }) => theme.colors.darkBlue};
   color: ${ props => props.theme.colors.white};
-  `;
-
-  const FlexContainer = styled.div`
-    display: flex;
-  `;
-
-  const FlexChild = styled.div`
-  flex: 1;
-  border: 2px solid yellow;
-  width: 30%;
-  justify-content: center;
-  align-items: center;
-  h6:nth-child(2) {
-    margin-top: 30%
-  },
   `;
 
   const StyledDetailsArea = styled.div`
@@ -123,14 +93,60 @@ function History(props) {
         border: 1px solid ${({ theme }) => theme.colors.darkShade[25]};
     }`;
 
+  const StyledButton = styled.button`
+    height: 44.63px;
+    max-width: 162px;
+    margin-left: 20px;
+    background: ${({ theme }) => theme.colors.blue};
+    border-radius: 22px;
+    color: white;
+    display: flex-end;
+    width: 30%;
+    justify-content: center;
+    align-items: right;
+    cursor: pointer;
+    border: none;
+  `;
+
   let itemID = 0;
+
   //console.log(JSON.stringify(allCheckins));
+  const exportPDF = () => {
+    const unit = "pt";
+    const size = "A4"; // Use A1, A2, A3 or A4
+    const orientation = "portrait"; // portrait or landscape
+
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+
+    doc.setFontSize(12);
+
+    const title = "Item History";
+    const headers = [["Type", "Name", "Unique Identifier", "Description", "Location", "Action", "Owner", "Time"]];
+
+    // const data = this.state.people.map(elt=> [elt.name, elt.profession]);
+    const data = allItemHistory.map( (c) =>
+      [c.type, c.name, c.uniqueIdentifier, c.description, c.location, c.action, c.owner, moment(c.time.toDate()).format('ll')]
+    )
+
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data
+    };
+
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save("report.pdf")
+  }
+
   return (
     <div>
-      <StyledHeading> Current Item State </StyledHeading>
-      {console.log("2222: ", allCheckins)}
+        <StyledHeading>
+          Current Item State
+          <StyledButton onClick={() => exportPDF()}>Export to PDF</StyledButton>
+        </StyledHeading>
       {
-
           <StyledDetailsArea>
           {
             allCheckins.filter(c => c.id === location.query.id).map( (c) =>
@@ -138,9 +154,10 @@ function History(props) {
                 <Item onComment={handleComment} user={user} checkin={c}
                       readComments={readComments} createComment={createComment}
                 />
-
             )
+
           }
+
           </StyledDetailsArea>
       }
       {/* //allCheckins.filter(c => c.owner === user.email) */}
@@ -155,8 +172,6 @@ function History(props) {
             )
          }
          </StyledDetailsArea>
-
-
     </div>
   );
 }

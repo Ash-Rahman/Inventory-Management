@@ -76,7 +76,6 @@ const StyledDetailsArea = styled.div`
   `;
 
   const CommentArea = styled.div`
-
    border-radius: 15px;
    background-color: ${({ theme }) => theme.colors.grey};
    width: 95%;
@@ -94,7 +93,6 @@ const StyledDetailsArea = styled.div`
   background: ${({ theme }) => theme.colors.blue};
   border-radius: 22px;
   color: white;
-  display: flex;
   justify-content: center;
   align-items: right;
   cursor: pointer;
@@ -251,8 +249,6 @@ function Item(props) {
               </StyledButton>
             </React.Fragment>
         </InfoArea2>
-
-
   );
 }
 
