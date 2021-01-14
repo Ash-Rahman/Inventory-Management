@@ -4,10 +4,9 @@ function useCheckin(fStore) {
   const readCheckins = () => ref.get();
 
   // below we add the methods to create a sub collection to hold checkin comments
-  const createComment = (checkinID, comment) => ref.doc(checkinID).collection('comments').add(comment); 
-  const readComments = (checkinID) => ref.doc(checkinID).collection('comments').get();
+  const createItemHistory = (checkinID, comment) => ref.doc(checkinID).collection('comments').add(comment);
+  const readItemHistory = (checkinID) => ref.doc(checkinID).collection('comments').get();
 
-
-  return {createCheckin, readCheckins, createComment, readComments}
+  return {createCheckin, readCheckins, createItemHistory, readItemHistory}
 }
 export default useCheckin;

@@ -27,12 +27,14 @@ const StyledHeading = styled.h4`
 const StyledLabel = styled.label`
   text-align: left;
   margin-top: 5%;
+  color: #ffffff;
 `;
 
 const StyledForm = styled.form`
   display: grid;
   justify-content: center;
   text-align: left;
+  background-color: ${({ theme }) => theme.colors.darkBlue};
 `;
 const StyledCheckinP = styled.p`
   display: flex;
@@ -106,46 +108,6 @@ const AddItemForm = props => {
     defaultValues: {type: "", name: "", uniqueIdentifier: "",  description: "", location: "", action: "createdItem", owner: ""}
   });
 
-  //const comment = watch('comment');
-
-  //const [remainingCommentCount, setRemainingCommentCount] = useState(maxCommentLength);
-
-
-  // useEffect(() => {
-
-  //     setRemainingCommentCount(maxCommentLength - comment.length);
-
-  // }, [comment])
-
-  //  const formValues = watch();
-  //  let checkinScore = {
-  //     exercise: 0,
-  //     veg: 0,
-  //     water: 0,
-  //     diet: 0
-  //  }
-
-  //  useEffect(() => {
-
-  //   checkinScore.exercise = !formValues.exercise ? 0 : parseInt(formValues.exercise);
-  //   checkinScore.veg = !formValues.veg ? 0 : parseInt(formValues.veg);
-  //   checkinScore.water = !formValues.water ? 0 : parseInt(formValues.water);
-
-  //   if (formValues.diet !== "") {
-
-  //     checkinScore.diet = formValues.diet === "0" ? 10 - (parseInt(formValues.foodPen) + parseInt(formValues.drinkPen)) : parseInt(formValues.diet);
-
-  //   }
-
-  //   setTotal(checkinScore.exercise + checkinScore.veg + checkinScore.water + checkinScore.diet);
-
-
-  //  }, [formValues])
-
-
-
-  const diet = watch("diet");
-
   const onFormSubmit = data => {
     //onSubmit({...data, ...checkinScore, ...{total:total}});
     onSubmit({...data });
@@ -191,11 +153,11 @@ const AddItemForm = props => {
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      <StyledLabel>Item action*</StyledLabel>
+      {/* <StyledLabel>Item action*</StyledLabel>
       <StyledCheckinP>
         <textarea rows="4" cols="40" name="action" value="createdItem" ref={register}></textarea>
       </StyledCheckinP>
-      <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
+      <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel> */}
 
       <StyledLabel>Item Owner*</StyledLabel>
       <StyledCheckinP>

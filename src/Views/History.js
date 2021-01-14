@@ -13,7 +13,7 @@ import "jspdf-autotable";
 
 function History(props) {
 
-  const {user, readCheckins, readChallenges, createComment, readComments, getCheckinById } = props;
+  const {user, readCheckins, readChallenges, createItemHistory, readItemHistory, getCheckinById } = props;
   const [allCheckins, setAllCheckins] = useState([]);
   const [checkin, setCheckin] = useState(0)
   const [allItemHistory, setAllItemHistory] = useState([]);
@@ -26,7 +26,7 @@ function History(props) {
 
    const handleComment = async (checkinId, comment) => {
 
-    await createComment(checkinId, comment);
+    await createItemHistory(checkinId, comment);
 
    }
 
@@ -48,7 +48,7 @@ function History(props) {
 
   useEffect(() => {
     const getAllHistory =  async () => {
-      const aHistory =  await readComments(location.query.id);
+      const aHistory =  await readItemHistory(location.query.id);
       let items = [];
       aHistory.forEach(c => items.push({...c.data(),...{id:c.id} }));
       setAllItemHistory(items)
@@ -152,7 +152,7 @@ function History(props) {
             allCheckins.filter(c => c.id === location.query.id).map( (c) =>
 
                 <Item onComment={handleComment} user={user} checkin={c}
-                      readComments={readComments} createComment={createComment}
+                      readItemHistory={readItemHistory} createItemHistory={createItemHistory}
                 />
             )
 
@@ -167,7 +167,7 @@ function History(props) {
          {
             allItemHistory.map( (c) =>
               <Item onComment={handleComment} user={user} checkin={c}
-                    readComments={readComments} createComment={createComment}
+                    readItemHistory={readItemHistory} createItemHistory={createItemHistory}
               />
             )
          }
@@ -179,7 +179,7 @@ function History(props) {
 History.propTypes = {
     checkins: PropTypes.array.isRequired,
     readCheckins: PropTypes.object.isRequired,
-    readComments: PropTypes.object.isRequired,
+    readItemHistory: PropTypes.object.isRequired,
     checkin: PropTypes.object.isRequired,
 };
 

@@ -101,6 +101,19 @@ const StyledDetailsArea = styled.div`
   border: none;
 `;
 
+  const StyledLink = styled(Link)`
+    height: 44.63px;
+    background: ${({ theme }) => theme.colors.blue};
+    border-radius: 22px;
+    color: white;
+    justify-content: center;
+    align-items: right;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 6%;
+    border: none;
+  `;
+
 
   const InfoArea = styled.div`
    border-radius: 15px;
@@ -131,14 +144,15 @@ const StyledDetailsArea = styled.div`
 
 function Item(props) {
 
-  const {checkin, user, readComments, updateCurrentItemUser, createComment, forHistory} = props;
+  const {checkin, user, readItemHistory, updateCurrentItem, createItemHistory, forHistory} = props;
   const [comment, setComment]= useState("");
   const [comments, setComments]= useState([]);
-  const [itemHistory, setItemHistory] = useState(0);
+  const [itemHistory, setItemHistory] = useState(checkin);
+  const [currentItem, setCurrentItem] = useState(checkin);
   const [isForHistory, setisForHistory] = useState(false);
 
   const readAllComment = async () => {
-    const commentsRef =  await readComments(checkin.id);
+    const commentsRef =  await readItemHistory(checkin.id);
     const comments = [];
     commentsRef.forEach(c => {comments.push(c.data())});
      setComments(comments);
@@ -156,23 +170,27 @@ function Item(props) {
     if(checkin) {
       setItemHistory(checkin);
     }
-    if(checkin.owner == user.email) {
-      checkin.owner = "None";
+    if(currentItem.owner == user.email) {
+      currentItem.owner =  "None";
     }
-    if(checkin.owner != user.email) {
-      checkin.owner = user.email;
+    if(currentItem.owner != user.email) {
+      currentItem.owner = user.email;
     }
+    console.log("handCheckout currentItem: ", currentItem);
+    console.log("handCheckout checkin: ", checkin);
+    console.log("handCheckout itemHistory: ", itemHistory);
 
     const ckin = {
-      ...checkin,
+      ...currentItem,
       ...{
         userId: user.uid,
         userName: user.displayName || user.email,
         time: new Date(),
       },
     };
-    await createComment(checkin.id, itemHistory);
-    await updateCurrentItemUser(checkin.id, ckin);
+    console.log("ckin: ", ckin);
+    await createItemHistory(checkin.id, itemHistory);
+    await updateCurrentItem(checkin.id, ckin);
     setTimeout(() => history.push('/'), 3000);
   };
 
@@ -187,8 +205,8 @@ function Item(props) {
 //         time: new Date(),
 //       },
 //     };
-//     await createComment(checkin.id, itemHistory);
-//     await updateCurrentItemUser(checkin.id, ckin);
+//     await createItemHistory(checkin.id, itemHistory);
+//     await updateCurrentItem(checkin.id, ckin);
 //     setTimeout(() => history.push('/'), 3000);
 //   };
 
@@ -235,15 +253,15 @@ function Item(props) {
           <h6>Item Location</h6>
           {checkin.location}
 
-
-
             <React.Fragment>
               <StyledButton>
-                <Link to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </Link>
+                <StyledLink to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </StyledLink>
               </StyledButton>
+
               <StyledButton>
-                <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
+                <StyledLink to={{pathname: '/history', query: {id: checkin.id}}}> History </StyledLink>
               </StyledButton>
+
               <StyledButton onClick={handleCheckoutUpdate}>
                 Checkin/Checkout
               </StyledButton>
@@ -270,7 +288,7 @@ Item.propTypes = {
   checkin: PropTypes.object.isRequired,
   onComment: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  updateCurrentItemUser: PropTypes.func.isRequired,
+  updateCurrentItem: PropTypes.func.isRequired,
   onClick: PropTypes.func,
 };
 

@@ -29,12 +29,14 @@ const StyledHeading = styled.h4`
 const StyledLabel = styled.label`
   text-align: left;
   margin-top: 5%;
+  color: #ffffff !important;
 `;
 
 const StyledForm = styled.form`
   display: grid;
   justify-content: center;
   text-align: left;
+  background-color: ${({ theme }) => theme.colors.darkBlue};
 `;
 const StyledCheckinP = styled.p`
   display: flex;
@@ -211,12 +213,12 @@ const UpdateItemForm = props => {
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      <StyledLabel>Item action*</StyledLabel>
-      <StyledCheckinP>
+      {/* <StyledLabel>Item action*</StyledLabel> */}
+      {/* <StyledCheckinP>
         <textarea onChange={e => setActionValue(e.target.value)}
                   value={action} rows="4" cols="40" name="action"  ref={register}>
         </textarea>
-      </StyledCheckinP>
+      </StyledCheckinP> */}
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
       <StyledLabel>Item Owner*</StyledLabel>

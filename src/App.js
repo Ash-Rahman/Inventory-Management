@@ -93,10 +93,10 @@ function App() {
   const {
     createCheckin,
     readCheckins,
-    readComments,
-    updateCurrentItemUser,
+    readItemHistory,
+    updateCurrentItem,
     getCheckinById,
-    createComment,
+    createItemHistory,
   } = useItem(firebase.firestore)
 
   const {
@@ -145,9 +145,9 @@ function App() {
         >
           <Switch>
             <Protected authenticated={isAuthenticated} exact path="/">
-              <Dash user={user} readComments={readComments} createComment={createComment}
+              <Dash user={user} readItemHistory={readItemHistory} createItemHistory={createItemHistory}
                     readCheckins={readCheckins} readChallenges={readChallenges}
-                    updateCurrentItemUser={updateCurrentItemUser}/>
+                    updateCurrentItem={updateCurrentItem}/>
             </Protected>
             <RedirectToDash authenticated={isAuthenticated} path="/join">
 
@@ -185,14 +185,14 @@ function App() {
             </Protected>
 
             <Protected authenticated={isAuthenticated} path="/updateItem">
-              <UpdateItem getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser}
-              user={user} createComment={createComment} />
+              <UpdateItem getCheckinById={getCheckinById} updateCurrentItem={updateCurrentItem}
+              user={user} createItemHistory={createItemHistory} />
             </Protected>
 
             <Protected authenticated={isAuthenticated} path="/history">
-              <History readCheckins={readCheckins} readComments={readComments}
-              getCheckinById={getCheckinById} updateCurrentItemUser={updateCurrentItemUser}
-              user={user} createComment={createComment}  />
+              <History readCheckins={readCheckins} readItemHistory={readItemHistory}
+              getCheckinById={getCheckinById} updateCurrentItem={updateCurrentItem}
+              user={user} createItemHistory={createItemHistory}  />
             </Protected>
 
           </Switch>

@@ -24,12 +24,13 @@ const StyledTile = styled(Tile)`
   justify-content: center;
   grid-row-gap: 20px;
   width: 100%;
+  background-color: ${({ theme }) => theme.colors.darkBlue};
 `;
 
 const StyledHeading = styled.h4`
   text-align: center;
   margin-top: 2%;
-  color: ${({ theme }) => theme.colors.purple};
+  color: #ffffff;
 `;
 
 const StyledThumbsUp = styled.div`
@@ -39,7 +40,7 @@ const StyledThumbsUp = styled.div`
 `;
 
 const UpdateItem = (props) => {
-  const { user, updateCurrentItemUser, getCheckinById, createComment } = props;
+  const { user, updateCurrentItem, getCheckinById, createItemHistory } = props;
   const location = useLocation();
   // const [checkedIn, setCheckedIn] = useState(false);
   const [item, setItemValue] = useState(0);
@@ -69,14 +70,21 @@ const UpdateItem = (props) => {
   // };
 
   const handleSubmit = async (checkin) => {
+    // See what the user did during the item update and alter a few values based on some of their choices.
+
+    // if user selects owner as me, set the new owner of item as the logged in user.
     if(checkin.owner == "Me" || checkin.owner == "") {
       checkin.owner = user.email;
+      checkin.action = "CheckedInItem";
     }
+    // if the user selects 'keep same' as owner keep owner the same.
     if(checkin.owner == "Keep Same") {
       checkin.owner = item.owner;
+      checkin.action = "UpdatedItemInfo";
     }
     if(checkin.owner == "None") {
       checkin.owner = "None";
+      checkin.action = "UpdatedItemInfo";
     }
 
     const ckin = {
@@ -87,8 +95,9 @@ const UpdateItem = (props) => {
         time: new Date(),
       },
     };
-    await createComment(location.query.id, itemHistory);
-    await updateCurrentItemUser(location.query.id, ckin);
+    //Create a history entry to remember the status of an item after an update.
+    await createItemHistory(location.query.id, itemHistory);
+    await updateCurrentItem(location.query.id, ckin);
     setTimeout(() => history.push('/'), 3000);
   };
 
@@ -107,7 +116,7 @@ const UpdateItem = (props) => {
 
 UpdateItem.propTypes = {
   user: PropTypes.object.isRequired,
-  updateCurrentItemUser: PropTypes.func.isRequired,
+  updateCurrentItem: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired,
   readCheckins: PropTypes.object.isRequired,
   getCheckinById: PropTypes.object.isRequired,

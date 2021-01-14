@@ -24,12 +24,13 @@ const StyledTile = styled(Tile)`
   justify-content: center;
   grid-row-gap: 20px;
   width: 100%;
+  background-color: ${({ theme }) => theme.colors.darkBlue};
 `;
 
 const StyledHeading = styled.h4`
   text-align: center;
   margin-top: 2%;
-  color: ${({ theme }) => theme.colors.purple};
+  color: #ffffff;
 `;
 
 const StyledThumbsUp = styled.div`

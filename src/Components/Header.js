@@ -136,6 +136,9 @@ height: 50px;
 display: flex;
 justify-content: space-between;
 `;
+const StyledHeading = styled.h4`
+  color: #ffffff;
+`;
 
 function Header(props) {
   const { onClick, open, user, signOut } = props;
@@ -164,8 +167,8 @@ function Header(props) {
         </StyledBurgerMenu>
         <StyledUserAvatar>
           {/* <FontAwesomeIcon style={{ fontSize: "16px" }} icon={faChevronDown} /> */}
-          <h6> {user.email}  <span style={{textDecoration: "underline", cursor:"pointer"}} onClick={handleSignOutClick}> (logout) </span></h6>
-          <img src={user.photoURL || avatarPlaceholder} alt="avatar" />
+          <StyledHeading> {user.email}  <span style={{textDecoration: "underline", cursor:"pointer"}} onClick={handleSignOutClick}> (logout) </span></StyledHeading>
+          {/* <img src={user.photoURL || avatarPlaceholder} alt="avatar" /> */}
         </StyledUserAvatar>
       </StyledWrapper>
     </div>

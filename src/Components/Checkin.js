@@ -87,12 +87,12 @@ const StyledDetailsArea = styled.div`
 
 function Checkin(props) {
 
- const {checkin,  userProfilePicture, user, onComment, readComments} = props;
+ const {checkin,  userProfilePicture, user, onComment, readItemHistory} = props;
  const [comment, setComment]= useState("");
  const [comments, setComments]= useState([]);
 
  const readAllComment = async () => {
-  const commentsRef =  await readComments(checkin.id);
+  const commentsRef =  await readItemHistory(checkin.id);
   const comments = [];
   commentsRef.forEach(c => {comments.push(c.data())});
    setComments(comments);

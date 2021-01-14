@@ -8,7 +8,8 @@ const theme = {
     lightBlue: "#355165",
     blue: "#283B4A",
     darkBlue: "#252F36",
-    white: "#FFFF",
+    white: "#FFFFFF",
+    buttonBlue: "#27AAE1",
     darkShade: {
       100: "rgba(31, 32, 65, 100)",
       75: "rgba(31, 32, 65, 0.75)",
