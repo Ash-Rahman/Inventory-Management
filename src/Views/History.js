@@ -66,11 +66,20 @@ function History(props) {
 
   const StyledDetailsArea = styled.div`
     display: grid;
-    grid-template-columns: 2fr 2fr;
+    grid-template-columns: 2fr;
     grid-column-gap: 5%;
     grid-row-gap: 40px;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.darkBlue};
+    @media (min-width: 500px) {
+      grid-template-columns: 2fr 2fr;
+    };
+    @media (min-width: 800px) {
+      grid-template-columns: 2fr 2fr 2fr;
+    };
+    @media (min-width: 1250px) {
+      grid-template-columns: 2fr 2fr 2fr 2fr;
+    };
     textarea {
         border-radius: 4px;
         border: 1px solid ${({ theme }) => theme.colors.darkShade[25]};

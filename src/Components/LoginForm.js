@@ -7,10 +7,10 @@ import { SocialIcon } from "react-social-icons";
 import { useForm } from 'react-hook-form';
 
 import * as yup from 'yup';
-const StyledHeading = styled.h2`
+  const StyledHeading = styled.h2`
     text-align: center;
     margin-top: 2%;
-    color: ${({ theme }) => theme.colors.purple};
+    color: #FFFFFF;
   `;
 
   const StyledSocialIconArea = styled.div`
@@ -21,10 +21,8 @@ const StyledHeading = styled.h2`
     }
   `;
 
-
-
 function LoginForm(props) {
-  
+
   const {buttonText, onSubmit, serverError, onSocialLogin} = props;
   const [displayEmail, setDisplayEmail] = useState(false);
 
@@ -35,7 +33,6 @@ function LoginForm(props) {
 
 
   const { register, handleSubmit,  errors } = useForm({validationSchema:loginFormSchema});
-  
 
   const handleClick = e => {
     e.preventDefault();
@@ -52,24 +49,23 @@ function LoginForm(props) {
   return (
     <React.Fragment>
       <StyledSocialIconArea>
-        <SocialIcon onClick={() => handleSocialClick("facebook")} network="facebook" />
         <SocialIcon onClick={() => handleSocialClick("google")} network="google" />
        { /*
 
        I am currently awaiting for my twitter developer AIP access to be approved
-       
+
        <SocialIcon onClick={() => handleSocialClick("twitter")} network="twitter" />
-       
+
        */}
       </StyledSocialIconArea>
       <StyledHeading> OR </StyledHeading>
-  
 
-       {!displayEmail &&  (<Button onClick={handleClick}   text="Email" />)   } 
-       
+
+       {!displayEmail &&  (<Button onClick={handleClick}   text="Email" />)   }
+
 
        {displayEmail && (
-         
+
           <form onSubmit={handleSubmit(handleInnerSubmit)}>
           <p>
             <label> Email   </label>
@@ -77,22 +73,22 @@ function LoginForm(props) {
           <p>
             <input type="text" name="email" style={errorBorder(errors.email)} ref={register}/>
             <ErrorLabel> {errors.email && errors.email.message} </ErrorLabel>
-         
+
           </p>
-          
+
             <label> Password </label>
-      
+
           <p>
             <input type="password" name="password" ref={register} style={errorBorder(errors.password)} />
             <ErrorLabel> {errors.password && errors.password.message} </ErrorLabel>
           </p>
-         
-          <Button  text={buttonText} />  
+
+          <Button  text={buttonText} />
           <ErrorLabel>{serverError}  </ErrorLabel>
-         
+
         </form>
        )}
-      
+
     </React.Fragment>
   );
 }
@@ -107,7 +103,7 @@ LoginForm.propTypes = {
 LoginForm.defaultProps = {
   buttonText: "JOIN",
   serverError: '',
-  
+
 };
 
 export default LoginForm;

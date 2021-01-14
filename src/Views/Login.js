@@ -8,6 +8,7 @@ import Form from "../Components/LoginForm";
 const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
+  background-color: ${({ theme }) => theme.colors.darkBlue};
   align-items: center;
   min-height: 100vh;
   min-width: 100vw;
@@ -15,6 +16,7 @@ const StyledWrapper = styled.div`
 
 const StyledTile = styled(Tile)`
   display: grid;
+  background-color: ${({ theme }) => theme.colors.blue};
   grid-template-columns: repeat(1, 1fr);
   justify-content: center;
   grid-row-gap: 20px;
@@ -23,14 +25,16 @@ const StyledTile = styled(Tile)`
     width: 30%;
   }
 `;
-
+//  color: ${({ theme }) => theme.colors.purple};
 const StyledHeading = styled.h2`
   text-align: center;
   margin-top: 2%;
-  color: ${({ theme }) => theme.colors.purple};
+  color: #FFFFFF;
 `;
+
 const StyledLink = styled(Link)`
   text-align: center;
+  color: #FFFFFF;
 `;
 
 function Login(props) {
@@ -56,6 +60,7 @@ function Login(props) {
   return (
     <StyledWrapper>
       <StyledTile>
+        <StyledHeading>Telesoft Inventory Management </StyledHeading>
         <StyledHeading>Login With </StyledHeading>
         <Form
           onSocialLogin={handleSocialLogin}

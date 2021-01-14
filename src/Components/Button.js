@@ -5,10 +5,10 @@ import styled from "styled-components";
 function Button(props) {
 
   const {onClick, text, ...args} = props;
-    
+
   const StyledButton = styled.button`
     height: 44.63px;
-    background: linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
+    background-color: #27AAE1;
     border-radius: 22px;
     color: white;
     display: flex;
@@ -20,7 +20,7 @@ function Button(props) {
     border: none;
   `;
 
-  return(  
+  return(
     <StyledButton onClick={onClick} {...args}> {text} </StyledButton>
   )
 }
