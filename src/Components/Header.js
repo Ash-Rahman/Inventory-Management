@@ -39,6 +39,19 @@ const StyledClosedText = styled.p`
   cursor: pointer;
 `;
 
+const StyledLink = styled(Link)`
+height: 44.63px;
+
+  border-radius: 22px;
+  color: white;
+  justify-content: center;
+  align-items: right;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 6%;
+  border: none;
+`;
+
 function Menu(props) {
   const { onClick } = props;
   const location = useLocation();
@@ -50,7 +63,7 @@ function Menu(props) {
         <ul>
           <StyledLi active={location.pathname === "/"}>
             {" "}
-            <Link to="/"> Dash </Link>{" "}
+            <StyledLink to="/"> Dash </StyledLink>{" "}
           </StyledLi>
           {/* <StyledLi active={location.pathname === "/profile"}>
             {" "}
@@ -62,7 +75,7 @@ function Menu(props) {
           </StyledLi> */}
           <StyledLi active={location.pathname === "/createItem"}>
             {" "}
-            <Link to="/createItem"> Add Item </Link>{" "}
+            <StyledLink to="/createItem"> Add Item </StyledLink>{" "}
           </StyledLi>
           {/* <StyledLi active={location.pathname === "/updateItem"}>
             {" "}
@@ -112,26 +125,28 @@ img {
   margin: 2%
 }
 `;
-
+//background: linear-gradient(180deg, #6fcf9d 0%, #67d2e8 100%);
 const StyledMenuWrapper = styled.div`
 transition: all 0.5s ease-in-out;
 transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
 height: 100vh;
 width: 304px;
-background: linear-gradient(180deg, #6fcf9d 0%, #67d2e8 100%);
+background-color: ${({ theme }) => theme.colors.lightBlue};
 position: absolute;
 padding-top: 1%;
 top: 0;
 left: 0;
 `;
 
+// background: linear-gradient(
+//   180deg,
+//   ${({ theme }) => theme.colors.lightBlue} 0%,
+//   ${({ theme }) => theme.colors.blue} 100%
+// );
+
 const StyledWrapper = styled.div`
 width: 100%;
-background: linear-gradient(
-  180deg,
-  ${({ theme }) => theme.colors.lightBlue} 0%,
-  ${({ theme }) => theme.colors.blue} 100%
-);
+background-color: ${({ theme }) => theme.colors.lightBlue};
 height: 50px;
 display: flex;
 justify-content: space-between;

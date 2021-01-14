@@ -27,19 +27,7 @@ const StyledDivPage = styled.div`
 }`;
 
 const SearchBar = (props) => {
-  const {setItemType, onKeyPress, setItemName, setUserEmail, itemType, itemName, userEmail} = props;
-  const [inputItemName, setInputItemName] = useState('');
-  const [inputItemType, setInputItemType] = useState('');
-  const [inputUserEmail, setInputUserEmail] = useState('');
-
-//   const handleKeyPress = (e) => {
-//     if(e.key === 'Enter') {
-//         setItemType(inputItemType);
-//         setItemName(inputItemName);
-//         setInputUserEmail(inputUserEmail);
-//         onKeyPress();
-//     }
-//   }
+  const {setItemType, onKeyPress, setItemName, setItemOwner, itemType, itemName, itemOwner} = props;
 
   return (
     <StyledDivPage>
@@ -60,10 +48,10 @@ const SearchBar = (props) => {
         </BarStyling>
 
         <BarStyling  rows="4"
-            onChange={e => setUserEmail(e.target.value)}
+            onChange={e => setItemOwner(e.target.value)}
             onKeyPress={onKeyPress}
-            value={userEmail}
-            placeholder={"search user type"}
+            value={itemOwner}
+            placeholder={"search item owner (email)"}
         >
         </BarStyling>
     </StyledDivPage>

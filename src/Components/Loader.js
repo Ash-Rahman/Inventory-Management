@@ -9,6 +9,8 @@ const StyledWrapper = styled.div`
   min-height: 100vh;
   min-width: 100vw;
   flex-direction: column;
+  color: #FFFFFF;
+  background-color: #252F36;
 }`
 
 const  Loader = () => {
@@ -16,17 +18,17 @@ const  Loader = () => {
         <StyledWrapper>
             <ClipLoader
                     size={50}
-                    color={"#95A2FB"}
+                    color={"#FFFFFF"}
                     loading={true}
             />
             <div>
             <p>loading ...</p>
             </div>
-       
-       
+
+
         </StyledWrapper>
-        
-       
+
+
     )
 }
 

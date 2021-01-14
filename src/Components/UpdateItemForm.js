@@ -88,6 +88,19 @@ const StyledCheckinTitle = styled.div`
   }
 `;
 
+const StyledButtonGreen = styled.button`
+  height: 44.63px;
+  background: ${({ theme }) => theme.colors.buttonGreen};
+  border-radius: 22px;
+  color: white;
+  justify-content: center;
+  align-items: right;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 6%;
+  border: none;
+`;
+
 const UpdateItemForm = props => {
 
   const ownerOptions = [
@@ -213,12 +226,12 @@ const UpdateItemForm = props => {
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      {/* <StyledLabel>Item action*</StyledLabel> */}
-      {/* <StyledCheckinP>
+      <StyledLabel>Item action*</StyledLabel>
+      <StyledCheckinP>
         <textarea onChange={e => setActionValue(e.target.value)}
                   value={action} rows="4" cols="40" name="action"  ref={register}>
         </textarea>
-      </StyledCheckinP> */}
+      </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
       <StyledLabel>Item Owner*</StyledLabel>
@@ -233,7 +246,7 @@ const UpdateItemForm = props => {
       </StyledFoodDrinkArea>
       <ErrorLabel> {errors.owner && errors.owner.message} </ErrorLabel>
 
-      <Button text="CHECKIN" type="submit"> </Button>
+      <StyledButtonGreen text="CHECKIN" type="submit"> Update Item </StyledButtonGreen>
     </StyledForm>
   );
 };

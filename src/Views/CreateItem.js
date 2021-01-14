@@ -5,6 +5,7 @@ import styled from "styled-components";
 import AddItemForm from "../Components/AddItemForm";
 import CheckedIn from "../Components/CheckedIn";
 import thumbsUp from "../assets/thumbs-up.svg";
+import Loader from "../Components/Loader";
 import { useHistory } from "react-router-dom";
 
 const StyledCheckedIn = styled.div`
@@ -46,6 +47,7 @@ const CreateItem = (props) => {
 
   const handleSubmit = async (checkin) => {
     setCheckedIn(true);
+
     const ckin = {
       ...checkin,
       ...{
@@ -66,7 +68,7 @@ const CreateItem = (props) => {
           <AddItemForm onSubmit={handleSubmit} />
         </StyledTile>
       ) : (
-        <CheckedIn />
+        <Loader />
       )}
     </React.Fragment>
   );

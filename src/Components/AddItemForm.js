@@ -86,6 +86,19 @@ const StyledCheckinTitle = styled.div`
   }
 `;
 
+const StyledButtonGreen = styled.button`
+  height: 44.63px;
+  background: ${({ theme }) => theme.colors.buttonGreen};
+  border-radius: 22px;
+  color: white;
+  justify-content: center;
+  align-items: right;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 6%;
+  border: none;
+`;
+
 const AddItemForm = props => {
 
   const {onSubmit} = props;
@@ -153,11 +166,11 @@ const AddItemForm = props => {
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      {/* <StyledLabel>Item action*</StyledLabel>
+      <StyledLabel>Item action*</StyledLabel>
       <StyledCheckinP>
         <textarea rows="4" cols="40" name="action" value="createdItem" ref={register}></textarea>
       </StyledCheckinP>
-      <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel> */}
+      <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
       <StyledLabel>Item Owner*</StyledLabel>
       <StyledCheckinP>
@@ -170,7 +183,7 @@ const AddItemForm = props => {
       </StyledCheckinTitle>
       <textarea rows="4" cols="40" name="comment" ref={register}></textarea> */}
       {/* <StyledHeading> Total: {total} points </StyledHeading> */}
-      <Button text="CHECKIN" type="submit"> </Button>
+      <StyledButtonGreen text="CHECKIN" type="submit"> Add Item </StyledButtonGreen>
     </StyledForm>
   );
 };

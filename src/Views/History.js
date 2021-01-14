@@ -22,13 +22,12 @@ function History(props) {
 
 
   const location = useLocation();
-  // setCheckin(location.query.checkin.id);
 
    const handleComment = async (checkinId, comment) => {
 
     await createItemHistory(checkinId, comment);
 
-   }
+  }
 
   //  const handleItemUpdate = async (checkinId, data) => {
 
@@ -54,23 +53,6 @@ function History(props) {
       setAllItemHistory(items)
     }
 
-    // const getAllChallenges = async () => {
-    //   const aChallenges = await readChallenges();
-    //   let challenges = [];
-    //   aChallenges.forEach(c => challenges.push(c.data()));
-    //   // using the daysjs libary to work out the days to the end of the challenge
-    //   const now =  dayjs();
-    //   const start = dayjs(challenges[0].start.toDate());
-    //   const end = dayjs(challenges[0].end.toDate());
-    //   const totalDays = end.diff(start, 'day');
-    //   const daysCompleted = now.diff(start, 'day');
-    //   const percentageComplete = (parseInt(daysCompleted) / parseInt(totalDays)) * 100;
-
-    //   setDaysComplete(daysCompleted);
-    //   setPercentageComplete(Math.round(percentageComplete));
-
-    //   }
-
     getAllHistory();
     //getAllChallenges();
   }, [])
@@ -79,6 +61,7 @@ function History(props) {
   text-align: center;
   background-color: ${({ theme }) => theme.colors.darkBlue};
   color: ${ props => props.theme.colors.white};
+  padding-bottom: 20px;
   `;
 
   const StyledDetailsArea = styled.div`
@@ -97,7 +80,7 @@ function History(props) {
     height: 44.63px;
     max-width: 162px;
     margin-left: 20px;
-    background: ${({ theme }) => theme.colors.blue};
+    background: ${({ theme }) => theme.colors.buttonYellow};
     border-radius: 22px;
     color: white;
     display: flex-end;
@@ -162,16 +145,19 @@ function History(props) {
       }
       {/* //allCheckins.filter(c => c.owner === user.email) */}
       <StyledHeading> Item History </StyledHeading>
-
-         <StyledDetailsArea>
-         {
-            allItemHistory.map( (c) =>
-              <Item onComment={handleComment} user={user} checkin={c}
-                    readItemHistory={readItemHistory} createItemHistory={createItemHistory}
-              />
-            )
-         }
-         </StyledDetailsArea>
+      {
+        allItemHistory.length > 0 ?
+           <StyledDetailsArea>
+           {
+              allItemHistory.map( (c) =>
+                <Item onComment={handleComment} user={user} checkin={c}
+                      readItemHistory={readItemHistory} createItemHistory={createItemHistory}
+                />
+              )
+           }
+           </StyledDetailsArea>
+        : <StyledHeading> No results </StyledHeading>
+      }
     </div>
   );
 }

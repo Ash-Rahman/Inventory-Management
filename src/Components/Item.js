@@ -88,9 +88,37 @@ const StyledDetailsArea = styled.div`
    },
   `;
 
-  const StyledButton = styled.button`
+  const StyledButtonBlue = styled.button`
   height: 44.63px;
-  background: ${({ theme }) => theme.colors.blue};
+  background: ${({ theme }) => theme.colors.buttonBlue};
+  border-radius: 22px;
+  color: white;
+  justify-content: center;
+  align-items: right;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 6%;
+  border: none;
+`;
+
+
+const StyledButtonYellow = styled.button`
+height: 44.63px;
+background: ${({ theme }) => theme.colors.buttonYellow};
+border-radius: 22px;
+color: white;
+justify-content: center;
+align-items: right;
+cursor: pointer;
+width: 100%;
+margin-top: 6%;
+border: none;
+`;
+
+
+const StyledButtonGreen = styled.button`
+  height: 44.63px;
+  background: ${({ theme }) => theme.colors.buttonGreen};
   border-radius: 22px;
   color: white;
   justify-content: center;
@@ -103,7 +131,7 @@ const StyledDetailsArea = styled.div`
 
   const StyledLink = styled(Link)`
     height: 44.63px;
-    background: ${({ theme }) => theme.colors.blue};
+
     border-radius: 22px;
     color: white;
     justify-content: center;
@@ -167,66 +195,29 @@ function Item(props) {
   }
 
   const handleCheckoutUpdate = async () => {
-    if(checkin) {
-      setItemHistory(checkin);
+    let newItem = currentItem;
+
+    //See if the user is checkingIn or CheckingOut the item
+    if(newItem.owner.trim() == user.email.trim()) {
+      newItem.owner =  "None";
+      newItem.action = "CheckedIn";
+    } else {
+      newItem.owner = user.email;
+      newItem.action = "CheckedOut";
     }
-    if(currentItem.owner == user.email) {
-      currentItem.owner =  "None";
-    }
-    if(currentItem.owner != user.email) {
-      currentItem.owner = user.email;
-    }
-    console.log("handCheckout currentItem: ", currentItem);
-    console.log("handCheckout checkin: ", checkin);
-    console.log("handCheckout itemHistory: ", itemHistory);
 
     const ckin = {
-      ...currentItem,
+      ...newItem,
       ...{
         userId: user.uid,
         userName: user.displayName || user.email,
         time: new Date(),
       },
     };
-    console.log("ckin: ", ckin);
     await createItemHistory(checkin.id, itemHistory);
     await updateCurrentItem(checkin.id, ckin);
     setTimeout(() => history.push('/'), 3000);
   };
-
-//  setItemHistory(checkin);
-
-//   const handleSubmit = async (checkin) => {
-//     const ckin = {
-//       ...checkin,
-//       ...{
-//         userId: user.uid,
-//         userName: user.displayName || user.email,
-//         time: new Date(),
-//       },
-//     };
-//     await createItemHistory(checkin.id, itemHistory);
-//     await updateCurrentItem(checkin.id, ckin);
-//     setTimeout(() => history.push('/'), 3000);
-//   };
-
-//  const handleKeyPress = (e) => {
-
-//     if(e.key === 'Enter' && comment) {
-//       const commentRecord =   {
-//         userId: user.uid,
-//         userName: user.displayName || user.email,
-//         message: comment,
-//         time: new Date(),
-//       }
-//       onComment(checkin.id, commentRecord);
-//       setComment("");
-//       // refresh comments
-//       readAllComment();
-//     }
-
-//  }
-  //console.log(JSON.stringify(checkin));
 
   return (
         <InfoArea2>
@@ -254,17 +245,17 @@ function Item(props) {
           {checkin.location}
 
             <React.Fragment>
-              <StyledButton>
+              <StyledButtonBlue>
                 <StyledLink to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </StyledLink>
-              </StyledButton>
+              </StyledButtonBlue>
 
-              <StyledButton>
+              <StyledButtonYellow>
                 <StyledLink to={{pathname: '/history', query: {id: checkin.id}}}> History </StyledLink>
-              </StyledButton>
+              </StyledButtonYellow>
 
-              <StyledButton onClick={handleCheckoutUpdate}>
+              <StyledButtonGreen onClick={handleCheckoutUpdate}>
                 Checkin/Checkout
-              </StyledButton>
+              </StyledButtonGreen>
             </React.Fragment>
         </InfoArea2>
   );

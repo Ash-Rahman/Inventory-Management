@@ -10,6 +10,8 @@ const theme = {
     darkBlue: "#252F36",
     white: "#FFFFFF",
     buttonBlue: "#27AAE1",
+    buttonYellow: "#FF9900",
+    buttonGreen: "#36D628",
     darkShade: {
       100: "rgba(31, 32, 65, 100)",
       75: "rgba(31, 32, 65, 0.75)",

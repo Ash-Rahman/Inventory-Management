@@ -6,7 +6,6 @@ import avatarPlaceHolder from "../assets/avatar_placeholder.png";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import * as dayjs from 'dayjs';
-import MyFilteringComponent from '../Components/MyFilteringComponent';
 import SearchBar from '../Components/SearchBar';
 
 function Dash(props) {
@@ -14,9 +13,8 @@ function Dash(props) {
   const {user, readCheckins, readChallenges, createItemHistory, readItemHistory, updateCurrentItem} = props;
   const [allCheckins, setAllCheckins] = useState([]);
   const [inputItemType, setInputItemType] = useState('');
-  const [inputType, setInputType] = useState('');
   const [inputItemName, setInputItemName] = useState('');
-  const [inputUserEmail, setInputUserEmail] = useState('');
+  const [inputItemOwner, setInputItemOwner] = useState('');
   const [filteredCheckins, setFilteredCheckins] = useState([]);
   const [daysComplete, setDaysComplete] = useState(0);
   const [percentageComplete, setPercentageComplete] = useState(0);
@@ -92,6 +90,7 @@ function Dash(props) {
   const StyledHeading = styled.h2`
   text-align: center;
   background-color: ${({ theme }) => theme.colors.darkBlue};
+  padding-bottom: 20px;
   color: ${ props => props.theme.colors.white};
   `;
 
@@ -126,35 +125,49 @@ function Dash(props) {
   }`;
 
     const handleKeyPress = (e) => {
-
+      //This takes all of the search bar inputs and does a search filter based on all of them.
+      //I am sorry this is absolutely disgustingly written!
       if(e.key === 'Enter') {
-        // const commentRecord =   {
-        //   photo: user.photoURL || avatarPlaceHolder,
-        //   userId: user.uid,
-        //   userName: user.displayName || user.email,
-        //   message: comment,
-        //   time: new Date(),
-        // }
-        console.log("input:", inputItemType);
-        // setInputItemType(inputItemType);
         let afilteredCheckins = allCheckins;
-        //await setFilteredCheckins(afilteredCheckins);
-        // setInput(input);
-        if(inputItemType != "") {
-          afilteredCheckins = afilteredCheckins.filter(c => c.type.toLowerCase().includes(inputItemType.trim().toLowerCase()));
+        if(inputItemType != "" && inputItemName != "" && inputItemOwner != "") {
+          afilteredCheckins = afilteredCheckins.filter(c =>
+            c.type.toLowerCase().includes(inputItemType.trim().toLowerCase()) &&
+            c.name.toLowerCase().includes(inputItemName.trim().toLowerCase()) &&
+            c.owner.toLowerCase().includes(inputItemOwner.trim().toLowerCase())
+          );
+        } else if (inputItemType != "" && inputItemName != "") {
+          afilteredCheckins = afilteredCheckins.filter(c =>
+            c.type.toLowerCase().includes(inputItemType.trim().toLowerCase()) &&
+            c.name.toLowerCase().includes(inputItemName.trim().toLowerCase())
+          );
+        } else if (inputItemType != "" && inputItemOwner != "") {
+          afilteredCheckins = afilteredCheckins.filter(c =>
+            c.type.toLowerCase().includes(inputItemType.trim().toLowerCase()) &&
+            c.owner.toLowerCase().includes(inputItemOwner.trim().toLowerCase())
+          );
+        } else if (inputItemName != "" && inputItemOwner != "") {
+          afilteredCheckins = afilteredCheckins.filter(c =>
+            c.name.toLowerCase().includes(inputItemName.trim().toLowerCase()) &&
+            c.owner.toLowerCase().includes(inputItemOwner.trim().toLowerCase())
+          );
+        } else if (inputItemType != "") {
+          afilteredCheckins = afilteredCheckins.filter(c =>
+            c.type.toLowerCase().includes(inputItemType.trim().toLowerCase())
+          );
+        } else if (inputItemName != "") {
+          afilteredCheckins = afilteredCheckins.filter(c =>
+            c.name.toLowerCase().includes(inputItemName.trim().toLowerCase())
+          );
+        } else if (inputItemOwner != "") {
+          afilteredCheckins = afilteredCheckins.filter(c =>
+            c.owner.toLowerCase().includes(inputItemOwner.trim().toLowerCase())
+          );
         }
 
         setFilteredCheckins(afilteredCheckins);
         console.log("allCheckins", JSON.stringify(allCheckins));
         console.log("aFiltered ", JSON.stringify(afilteredCheckins));
         console.log("filteredArr: ", JSON.stringify(filteredCheckins));
-        // let afilteredCheckins = [];
-        // // allCheckins.forEach(filteredCheckins.push(filter(c => c.type === input)));
-        // afilteredCheckins.push(allCheckins.filter(c => c.type == input));
-        // setInput(input);
-        // setFilteredCheckins(afilteredCheckins);
-        // console.log("aFiltered", JSON.stringify(afilteredCheckins));
-
       }
 
    }
@@ -168,8 +181,8 @@ function Dash(props) {
                   value={inputItemType}
         >
         </textarea> */}
-        <SearchBar setItemType={setInputItemType} onKeyPress={handleKeyPress} setItemName={setInputItemName} setUserEmail={setInputUserEmail}
-          itemType={inputItemType} itemName={inputItemName} userEmail={inputUserEmail}
+        <SearchBar setItemType={setInputItemType} onKeyPress={handleKeyPress} setItemName={setInputItemName} setItemOwner={setInputItemOwner}
+          itemType={inputItemType} itemName={inputItemName} itemOwner={inputItemOwner}
         >
         </SearchBar>
          {/* <BarStyling  rows="4"
@@ -195,39 +208,42 @@ function Dash(props) {
                 placeholder={"search user type"}
         >
         </BarStyling> */}
-        <StyledHeading> Your Checked-Out Items! </StyledHeading>
-      {/* <input placeholder="Search Item Type" onChangeText={text => {searchItem(text)}}>  </input> */}
+      <StyledHeading> Your Checked-Out Items! </StyledHeading>
       {
+          filteredCheckins.length > 0 ?
+            <StyledDetailsArea>
+            {
+              filteredCheckins.filter(c => c.owner === user.email).map( (c) =>
 
-          <StyledDetailsArea>
-          {
-            filteredCheckins.filter(c => c.owner === user.email).map( (c) =>
+                  <Item onComment={handleComment} user={user} checkin={c}
+                        readItemHistory={readItemHistory} createItemHistory={createItemHistory}
+                        updateCurrentItem={updateCurrentItem}
+                  />
 
-                <Item onComment={handleComment} user={user} checkin={c}
-                      readItemHistory={readItemHistory} createItemHistory={createItemHistory}
-                      updateCurrentItem={updateCurrentItem}
-                />
+              )
+            }
+            </StyledDetailsArea>
 
-            )
-          }
-          </StyledDetailsArea>
+          : <StyledHeading> No results </StyledHeading>
 
       }
-      {/* //allCheckins.filter(c => c.owner === user.email) */}
+
       <StyledHeading> All Items </StyledHeading>
       {
-         <StyledDetailsArea>
-         {/* //allCheckins.filter(c => c.owner === user.email) */}
-         {
-            filteredCheckins.map( (c) =>
+        filteredCheckins.length > 0 ?
+           <StyledDetailsArea>
+           {
+              filteredCheckins.map( (c) =>
 
-              <Item onComment={handleComment} user={user} checkin={c}
-              readItemHistory={readItemHistory} createItemHistory={createItemHistory}
-              updateCurrentItem={updateCurrentItem} />
+                <Item onComment={handleComment} user={user} checkin={c}
+                readItemHistory={readItemHistory} createItemHistory={createItemHistory}
+                updateCurrentItem={updateCurrentItem} />
 
-            )
-         }
-         </StyledDetailsArea>
+              )
+           }
+           </StyledDetailsArea>
+
+        : <StyledHeading> No results </StyledHeading>
       }
 
     </div>

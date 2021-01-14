@@ -4,6 +4,7 @@ import Tile from "../Components/Tile";
 import styled from "styled-components";
 import UpdateItemForm from "../Components/UpdateItemForm";
 import CheckedIn from "../Components/CheckedIn";
+import Loader from "../Components/Loader"
 import thumbsUp from "../assets/thumbs-up.svg";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -42,7 +43,7 @@ const StyledThumbsUp = styled.div`
 const UpdateItem = (props) => {
   const { user, updateCurrentItem, getCheckinById, createItemHistory } = props;
   const location = useLocation();
-  // const [checkedIn, setCheckedIn] = useState(false);
+  const [checkedIn, setCheckedIn] = useState(false);
   const [item, setItemValue] = useState(0);
   const [itemHistory, setItemHistory] = useState(0);
   const [gotItem, setGotItem] = useState(false);
@@ -71,7 +72,7 @@ const UpdateItem = (props) => {
 
   const handleSubmit = async (checkin) => {
     // See what the user did during the item update and alter a few values based on some of their choices.
-
+    setCheckedIn(true);
     // if user selects owner as me, set the new owner of item as the logged in user.
     if(checkin.owner == "Me" || checkin.owner == "") {
       checkin.owner = user.email;
@@ -104,11 +105,13 @@ const UpdateItem = (props) => {
   //console.log("item" + JSON.stringify(item));
   return (
     <React.Fragment>
-      {gotItem && (
+      {gotItem && !checkedIn ? (
         <StyledTile>
           <StyledHeading> Edit Item </StyledHeading>
           <UpdateItemForm onSubmit={handleSubmit} item={item} />
         </StyledTile>
+      ) : (
+        <Loader />
       )}
     </React.Fragment>
   );
