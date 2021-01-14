@@ -233,7 +233,7 @@ function Dash(props) {
         filteredCheckins.length > 0 ?
            <StyledDetailsArea>
            {
-              filteredCheckins.map( (c) =>
+              filteredCheckins.filter(c => c.owner != user.email).map( (c) =>
 
                 <Item onComment={handleComment} user={user} checkin={c}
                 readItemHistory={readItemHistory} createItemHistory={createItemHistory}

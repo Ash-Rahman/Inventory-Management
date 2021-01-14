@@ -151,7 +151,7 @@ function History(props) {
            {
               allItemHistory.map( (c) =>
                 <Item onComment={handleComment} user={user} checkin={c}
-                      readItemHistory={readItemHistory} createItemHistory={createItemHistory}
+                      readItemHistory={readItemHistory} createItemHistory={createItemHistory} forHistory={true}
                 />
               )
            }

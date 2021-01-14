@@ -11,28 +11,6 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import ItemButton from "../Components/ItemButton";
 import Histogram from "./Histogram";
 
-
-function LikeButton(props) {
-  const StyledDiv = styled.div`
-    border-radius: 11px;
-    border: 1px solid ${({ theme }) => theme.colors.purple};
-    width: 40px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: ${({ theme }) => theme.colors.purple};
-  `;
-
-  return (
-    <StyledDiv>
-      <h6>
-        <FontAwesomeIcon style={{ fontSize: "12px" }} icon={faHeart} /> 12{" "}
-      </h6>
-    </StyledDiv>
-  );
-}
-
 const StyledDetailsArea = styled.div`
     display: grid;
     grid-template-columns: 0.2fr 3fr;
@@ -129,6 +107,20 @@ const StyledButtonGreen = styled.button`
   border: none;
 `;
 
+
+const StyledButtonRed = styled.button`
+  height: 44.63px;
+  background: ${({ theme }) => theme.colors.buttonRed};
+  border-radius: 22px;
+  color: white;
+  justify-content: center;
+  align-items: right;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 6%;
+  border: none;
+`;
+
   const StyledLink = styled(Link)`
     height: 44.63px;
 
@@ -177,7 +169,8 @@ function Item(props) {
   const [comments, setComments]= useState([]);
   const [itemHistory, setItemHistory] = useState(checkin);
   const [currentItem, setCurrentItem] = useState(checkin);
-  const [isForHistory, setisForHistory] = useState(false);
+  const [isForHistory, setIsForHistory] = useState(false);
+  const [userOwnsItem, setUserOwnsItem] = useState(false);
 
   const readAllComment = async () => {
     const commentsRef =  await readItemHistory(checkin.id);
@@ -187,12 +180,15 @@ function Item(props) {
   }
   useEffect(() => {
    readAllComment();
+   if(checkin.owner.trim() == user.email.trim()) {
+    setUserOwnsItem(true);
+   }
+   if(forHistory) {
+    setIsForHistory(true);
+   }
   }, [])
 
   let history = useHistory();
-  if(forHistory) {
-    setisForHistory(true);
-  }
 
   const handleCheckoutUpdate = async () => {
     let newItem = currentItem;
@@ -244,6 +240,8 @@ function Item(props) {
           <h6>Item Location</h6>
           {checkin.location}
 
+
+          {!isForHistory &&
             <React.Fragment>
               <StyledButtonBlue>
                 <StyledLink to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </StyledLink>
@@ -252,11 +250,17 @@ function Item(props) {
               <StyledButtonYellow>
                 <StyledLink to={{pathname: '/history', query: {id: checkin.id}}}> History </StyledLink>
               </StyledButtonYellow>
-
-              <StyledButtonGreen onClick={handleCheckoutUpdate}>
-                Checkin/Checkout
-              </StyledButtonGreen>
+              {!userOwnsItem ?
+                <StyledButtonGreen onClick={handleCheckoutUpdate}>
+                  Checkout
+                </StyledButtonGreen>
+               :
+                <StyledButtonRed onClick={handleCheckoutUpdate}>
+                  Checkin
+                </StyledButtonRed>
+              }
             </React.Fragment>
+          }
         </InfoArea2>
   );
 }
