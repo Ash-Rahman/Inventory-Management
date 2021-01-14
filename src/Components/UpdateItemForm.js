@@ -1,30 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
-import Tile from "./Tile";
 import styled from "styled-components";
-
-import drinkIcon from "../assets/drink-icon.svg";
-import foodIcon from "../assets/food-icon.svg";
-import Button from "./Button";
 import ErrorLabel from "./ErrorLabel";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { useHistory, useLocation } from "react-router-dom";
-import Item from "./Item";
-
-const StyledTile = styled(Tile)`
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  justify-content: center;
-  grid-row-gap: 20px;
-  width: 100%;
-`;
-
-const StyledHeading = styled.h4`
-  text-align: center;
-  margin-top: 2%;
-  color: ${({ theme }) => theme.colors.purple};
-`;
 
 const StyledLabel = styled.label`
   text-align: left;
@@ -69,25 +48,6 @@ const StyledSelect = styled.select`
   color: rgba(31, 32, 65, 0.75);
 `;
 
-const StyledIcon = styled.img`
-  margin-right: -10px;
-  z-index: 2000;
-  display: relative;
-  position: absolute;
-  margin-top: 10px;
-  margin-left: 6px;
-`;
-
-const StyledCheckinTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  p {
-    font-size: 12px;
-    color:  ${({ theme, error}) => error ? "red" : theme.colors.darkShade[25]};
-    margin-top: 5%;
-  }
-`;
-
 const StyledButtonGreen = styled.button`
   height: 44.63px;
   background: ${({ theme }) => theme.colors.buttonGreen};
@@ -120,29 +80,6 @@ const UpdateItemForm = props => {
   const [action, setActionValue] = useState(item.action);
   const [owner, setOwnerValue] = useState(ownerOptions[0]);
 
-  // console.log("I got item form ", item);
-  // const location = useLocation();
-
-  // const [item, setItemValue] = useState();
-
-  // if (location.query) {
-  //   console.log("query1: ", JSON.stringify(location.query));
-  //   const getItem = async () => {
-  //     const aItem = await getCheckinById(location.query.id);
-  //     console.log("query2: ", location.query);
-  //     item = aItem.data();
-  //     console.log("item: ", item);
-  //     setItemValue(item)
-  //   }
-  //   getItem()
-  // }
-
-  // console.log("Form Item", item);
-  // const { data } = this.props.location;
-  // print(data);
-
-  const maxCommentLength = 5;
-
   const checkinFormSchema = yup.object().shape({
     type: yup.string().required("you must give this an item type"),
     name: yup.string().required("you must name this item"),
@@ -157,19 +94,6 @@ const UpdateItemForm = props => {
     validationSchema: checkinFormSchema,
     defaultValues: {type: item.type, name: "", uniqueIdentifier: "",  description: "", location: "", action: "", owner: ownerOptions[0]}
   });
-
-  // const comment = watch('comment');
-
-  const [remainingCommentCount, setRemainingCommentCount] = useState(maxCommentLength);
-
-
-  // useEffect(() => {
-
-  //     setRemainingCommentCount(maxCommentLength - comment.length);
-
-  // }, [comment])
-
-  const diet = watch("diet");
 
   const onFormSubmit = data => {
     //onSubmit({...data, ...checkinScore, ...{total:total}});

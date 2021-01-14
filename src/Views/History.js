@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import DaysCompleted from "../Components/DaysCompleted";
 import Item from "../Components/Item";
-import avatarPlaceHolder from "../assets/avatar_placeholder.png";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import * as dayjs from 'dayjs';
 
@@ -15,11 +13,7 @@ function History(props) {
 
   const {user, readCheckins, readChallenges, createItemHistory, readItemHistory, getCheckinById } = props;
   const [allCheckins, setAllCheckins] = useState([]);
-  const [checkin, setCheckin] = useState(0)
   const [allItemHistory, setAllItemHistory] = useState([]);
-  const [daysComplete, setDaysComplete] = useState(0);
-  const [percentageComplete, setPercentageComplete] = useState(0);
-
 
   const location = useLocation();
 
@@ -28,12 +22,6 @@ function History(props) {
     await createItemHistory(checkinId, comment);
 
   }
-
-  //  const handleItemUpdate = async (checkinId, data) => {
-
-  //   await updateCheckin(checkinId, data);
-
-  //  }
 
   useEffect(() => {
     const getAllCheckins =  async () => {
@@ -100,9 +88,6 @@ function History(props) {
     border: none;
   `;
 
-  let itemID = 0;
-
-  //console.log(JSON.stringify(allCheckins));
   const exportPDF = () => {
     const unit = "pt";
     const size = "A4"; // Use A1, A2, A3 or A4
@@ -152,7 +137,6 @@ function History(props) {
 
           </StyledDetailsArea>
       }
-      {/* //allCheckins.filter(c => c.owner === user.email) */}
       <StyledHeading> Item History </StyledHeading>
       {
         allItemHistory.length > 0 ?

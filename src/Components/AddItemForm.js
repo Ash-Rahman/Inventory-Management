@@ -1,28 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
-import Tile from "./Tile";
 import styled from "styled-components";
 
-import drinkIcon from "../assets/drink-icon.svg";
-import foodIcon from "../assets/food-icon.svg";
-import Button from "./Button";
 import ErrorLabel from "./ErrorLabel";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-
-const StyledTile = styled(Tile)`
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  justify-content: center;
-  grid-row-gap: 20px;
-  width: 100%;
-`;
-
-const StyledHeading = styled.h4`
-  text-align: center;
-  margin-top: 2%;
-  color: ${({ theme }) => theme.colors.purple};
-`;
 
 const StyledLabel = styled.label`
   text-align: left;
@@ -67,25 +49,6 @@ const StyledSelect = styled.select`
   color: rgba(31, 32, 65, 0.75);
 `;
 
-const StyledIcon = styled.img`
-  margin-right: -10px;
-  z-index: 2000;
-  display: relative;
-  position: absolute;
-  margin-top: 10px;
-  margin-left: 6px;
-`;
-
-const StyledCheckinTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  p {
-    font-size: 12px;
-    color:  ${({ theme, error}) => error ? "red" : theme.colors.darkShade[25]};
-    margin-top: 5%;
-  }
-`;
-
 const StyledButtonGreen = styled.button`
   height: 44.63px;
   background: ${({ theme }) => theme.colors.buttonGreen};
@@ -102,9 +65,6 @@ const StyledButtonGreen = styled.button`
 const AddItemForm = props => {
 
   const {onSubmit} = props;
-  //const [total, setTotal] = useState(0);
-
-  const maxCommentLength = 5;
 
   const checkinFormSchema = yup.object().shape({
     type: yup.string().required("you must give this an item type"),
@@ -178,11 +138,6 @@ const AddItemForm = props => {
       </StyledCheckinP>
       <ErrorLabel> {errors.location && errors.location.message} </ErrorLabel>
 
-      {/* <StyledCheckinTitle  error={remainingCommentCount < 0} >
-      <StyledLabel>Comment</StyledLabel> <p>{remainingCommentCount}</p>{" "}
-      </StyledCheckinTitle>
-      <textarea rows="4" cols="40" name="comment" ref={register}></textarea> */}
-      {/* <StyledHeading> Total: {total} points </StyledHeading> */}
       <StyledButtonGreen text="CHECKIN" type="submit"> Add Item </StyledButtonGreen>
     </StyledForm>
   );

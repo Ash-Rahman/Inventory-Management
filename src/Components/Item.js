@@ -1,69 +1,11 @@
 import React, {useState, useEffect} from "react";
-import avatarPlaceHolder from "../assets/avatar_placeholder.png"
 import moment from "moment";
 import PropTypes from "prop-types";
-import Tile from "./Tile";
 import styled from "styled-components";
-import avatarSmall from "../assets/avatar_small.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation, useHistory } from "react-router-dom";
-import ItemButton from "../Components/ItemButton";
-import Histogram from "./Histogram";
-
-const StyledDetailsArea = styled.div`
-    display: grid;
-    grid-template-columns: 0.2fr 3fr;
-    color: #252F36;
-
-    textarea {
-        border-radius: 4px;
-        border: 1px solid ${({ theme }) => theme.colors.darkShade[25]};
-    }`;
-
 
   const StyledSpan = styled.span`
     color: ${({ theme }) => theme.colors.purple};
-  `;
-
-  const StyledPhotoArea = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justifyContent: 'flex-start',
-  `;
-
-  const StyledCheckinArea = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    min-height: 190px;
-  `;
-
-  const StyledScoreArea = styled.div`
-
-    display: flex;
-    flex-direction: row;
-    h3 {
-      color: ${({ theme }) => theme.colors.purple};
-    },`;
-
-  const StyledDivider = styled.hr`
-    border: 0.3px solid ${({ theme }) => theme.colors.darkShade[5]};
-    width: 100%;
-  `;
-
-  const CommentArea = styled.div`
-   border-radius: 15px;
-   background-color: ${({ theme }) => theme.colors.grey};
-   width: 95%;
-   margin-top: 2%;
-   margin-bottom: 2%;
-   min-height: 80px;
-   padding 3%;
-   h6:nth-child(2) {
-       margin-top: 5%
-   },
   `;
 
   const StyledButtonBlue = styled.button`
@@ -134,20 +76,6 @@ const StyledButtonRed = styled.button`
     border: none;
   `;
 
-
-  const InfoArea = styled.div`
-   border-radius: 15px;
-   background-color: ${({ theme }) => theme.colors.grey};
-   width: 100%;
-   margin-top: 2%;
-   margin-bottom: 2%;
-   min-height: 80px;
-   min-width: 230px;
-   padding 3%;
-   h6:nth-child(2) {
-       margin-top: 5%
-   },
-  `;
   // h6:nth-child(2) {
   //   margin-right: 5%
   // },
@@ -264,20 +192,6 @@ function Item(props) {
         </InfoArea2>
   );
 }
-
-// {!isForHistory ? (
-//   <React.Fragment>
-//   <StyledButton>
-//     <Link to={{pathname: '/updateItem', query: {id: checkin.id}}}> Update Item </Link>
-//   </StyledButton>
-//   <StyledButton>
-//     <Link to={{pathname: '/history', query: {id: checkin.id}}}> History </Link>
-//   </StyledButton>
-//   <StyledButton onClick={handleCheckoutUpdate}>
-//     Checkin/Checkout
-//   </StyledButton>
-//   </React.Fragment>
-// ): (<React.Fragment></React.Fragment>)}
 
 Item.propTypes = {
   checkin: PropTypes.object.isRequired,

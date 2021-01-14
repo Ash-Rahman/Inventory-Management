@@ -1,14 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import avatarLarge from "../assets/avatar_small.png";
-import avatarPlaceholder from "../assets/avatar_placeholder.png";
-
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-
 
 const StyledNav = styled.nav`
   ul {
@@ -65,26 +58,10 @@ function Menu(props) {
             {" "}
             <StyledLink to="/"> Dash </StyledLink>{" "}
           </StyledLi>
-          {/* <StyledLi active={location.pathname === "/profile"}>
-            {" "}
-             <Link to="/profile"> Profile </Link>{" "}
-          </StyledLi> */}
-          {/* <StyledLi active={location.pathname === "/checkin"}>
-            {" "}
-             <Link to="/checkin"> Checkin </Link>{" "}
-          </StyledLi> */}
           <StyledLi active={location.pathname === "/createItem"}>
             {" "}
             <StyledLink to="/createItem"> Add Item </StyledLink>{" "}
           </StyledLi>
-          {/* <StyledLi active={location.pathname === "/updateItem"}>
-            {" "}
-            <Link to="/updateItem"> Edit Item </Link>{" "}
-          </StyledLi>
-          <StyledLi active={location.pathname === "/history"}>
-            {" "}
-            <Link to="/hitory"> History </Link>{" "}
-          </StyledLi> */}
         </ul>
       </StyledNav>
     </div>
@@ -125,7 +102,7 @@ img {
   margin: 2%
 }
 `;
-//background: linear-gradient(180deg, #6fcf9d 0%, #67d2e8 100%);
+
 const StyledMenuWrapper = styled.div`
 transition: all 0.5s ease-in-out;
 transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};
@@ -137,12 +114,6 @@ padding-top: 1%;
 top: 0;
 left: 0;
 `;
-
-// background: linear-gradient(
-//   180deg,
-//   ${({ theme }) => theme.colors.lightBlue} 0%,
-//   ${({ theme }) => theme.colors.blue} 100%
-// );
 
 const StyledWrapper = styled.div`
 width: 100%;
@@ -181,9 +152,7 @@ function Header(props) {
           <hr />
         </StyledBurgerMenu>
         <StyledUserAvatar>
-          {/* <FontAwesomeIcon style={{ fontSize: "16px" }} icon={faChevronDown} /> */}
           <StyledHeading> {user.email}  <span style={{textDecoration: "underline", cursor:"pointer"}} onClick={handleSignOutClick}> (logout) </span></StyledHeading>
-          {/* <img src={user.photoURL || avatarPlaceholder} alt="avatar" /> */}
         </StyledUserAvatar>
       </StyledWrapper>
     </div>

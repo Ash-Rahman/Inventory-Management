@@ -50,13 +50,7 @@ function LoginForm(props) {
     <React.Fragment>
       <StyledSocialIconArea>
         <SocialIcon onClick={() => handleSocialClick("google")} network="google" />
-       { /*
 
-       I am currently awaiting for my twitter developer AIP access to be approved
-
-       <SocialIcon onClick={() => handleSocialClick("twitter")} network="twitter" />
-
-       */}
       </StyledSocialIconArea>
       <StyledHeading> OR </StyledHeading>
 
