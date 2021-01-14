@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Tile from "../Components/Tile";
 import styled from "styled-components";
 import AddItemForm from "../Components/AddItemForm";
-import CheckedIn from "../Components/CheckedIn";
 import thumbsUp from "../assets/thumbs-up.svg";
 import Loader from "../Components/Loader";
 import { useHistory } from "react-router-dom";

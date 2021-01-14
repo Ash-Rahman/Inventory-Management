@@ -3,21 +3,10 @@ import PropTypes from "prop-types";
 import Tile from "../Components/Tile";
 import styled from "styled-components";
 import UpdateItemForm from "../Components/UpdateItemForm";
-import CheckedIn from "../Components/CheckedIn";
 import Loader from "../Components/Loader"
 import thumbsUp from "../assets/thumbs-up.svg";
 import { useHistory, useLocation } from "react-router-dom";
 
-const StyledCheckedIn = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(180deg, #6fcf97 0%, #66d2ea 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-`;
 
 const StyledTile = styled(Tile)`
   display: grid;
@@ -34,11 +23,6 @@ const StyledHeading = styled.h4`
   color: #ffffff;
 `;
 
-const StyledThumbsUp = styled.div`
-  background: url(${thumbsUp}) no-repeat left top;
-  width: 150px;
-  height: 150px;
-`;
 
 const UpdateItem = (props) => {
   const { user, updateCurrentItem, getCheckinById, createItemHistory } = props;
@@ -62,13 +46,6 @@ const UpdateItem = (props) => {
     }
     getItem()
   }
-
-
-  // const getId = async (checkin) => {
-  //   console.log("query" + location.query.itemId)
-  //   const item = getCheckinById(location.query.itemId);
-  //   setTimeout(() => history.push('/'), 3000);
-  // };
 
   const handleSubmit = async (checkin) => {
     // See what the user did during the item update and alter a few values based on some of their choices.

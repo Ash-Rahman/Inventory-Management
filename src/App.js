@@ -7,11 +7,9 @@ import Loader from "./Components/Loader";
 import { Switch, Route, useLocation, Redirect } from "react-router-dom";
 import Dash from "./Views/Dash";
 import Join from "./Views/Join";
-import Checkin from "./Views/Checkin";
 import CreateItem from "./Views/CreateItem";
 import UpdateItem from "./Views/UpdateItem";
 import History from "./Views/History";
-import Profile from "./Views/Profile";
 import Login from "./Views/Login";
 
 import useChallenge from "./services/firebase/useChallenge";
