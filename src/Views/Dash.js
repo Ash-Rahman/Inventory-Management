@@ -12,6 +12,7 @@ function Dash(props) {
   const [inputItemName, setInputItemName] = useState('');
   const [inputItemOwner, setInputItemOwner] = useState('');
   const [filteredCheckins, setFilteredCheckins] = useState([]);
+  const [numberOfResults, setNumberOfResults] = useState(0);
 
    const handleComment = async (checkinId, comment) => {
 
@@ -28,12 +29,17 @@ function Dash(props) {
       setAllCheckins(checkins);
 
       if (inputItemType == "") {
-        console.log("empty Array");
         setFilteredCheckins(checkins);
+      }
+
+      if(numberOfResults == 0) {
+        await setNumberOfResults(checkins.length);
       }
 
       console.log("FilterecCheckin Init: ", filteredCheckins);
     }
+
+
 
     getAllCheckins();
 
@@ -55,10 +61,18 @@ function Dash(props) {
 `;
 
   const StyledHeading = styled.h2`
-  text-align: center;
-  background-color: ${({ theme }) => theme.colors.darkBlue};
-  padding-bottom: 20px;
-  color: ${ props => props.theme.colors.white};
+    text-align: center;
+    background-color: ${({ theme }) => theme.colors.darkBlue};
+    padding-bottom: 5px;
+    color: ${ props => props.theme.colors.white};
+  `;
+
+  const StyledResultsNumber = styled.h6`
+    text-align: left;
+    background-color: ${({ theme }) => theme.colors.darkBlue};
+    padding-bottom: 5px;
+    padding-left: 10px;
+    color: ${ props => props.theme.colors.white};
   `;
 
   const StyledDetailsArea = styled.div`
@@ -121,22 +135,27 @@ function Dash(props) {
             c.owner.toLowerCase().includes(inputItemOwner.trim().toLowerCase())
           );
         }
-
+        setNumberOfResults(afilteredCheckins.length);
         setFilteredCheckins(afilteredCheckins);
-        console.log("allCheckins", JSON.stringify(allCheckins));
-        console.log("aFiltered ", JSON.stringify(afilteredCheckins));
-        console.log("filteredArr: ", JSON.stringify(filteredCheckins));
+        // console.log("allCheckins", JSON.stringify(allCheckins));
+        // console.log("aFiltered ", JSON.stringify(afilteredCheckins));
+        // console.log("filteredArr: ", JSON.stringify(filteredCheckins));
       }
 
    }
 
   return (
     <div>
+
         <SearchBar setItemType={setInputItemType} onKeyPress={handleKeyPress} setItemName={setInputItemName} setItemOwner={setInputItemOwner}
           itemType={inputItemType} itemName={inputItemName} itemOwner={inputItemOwner}
         >
         </SearchBar>
+
       <StyledHeading> Your Checked-Out Items! </StyledHeading>
+      <StyledResultsNumber>
+          Results: {numberOfResults}
+      </StyledResultsNumber>
       {
           filteredCheckins.length > 0 ?
             <StyledDetailsArea>
