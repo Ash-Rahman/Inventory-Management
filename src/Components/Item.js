@@ -90,6 +90,16 @@ const StyledButtonRed = styled.button`
   margin-top: 1%;
  `;
 
+ const StyledH6 = styled.h6`
+  color: ${({ theme }) => theme.colors.white};
+  padding-bottom: 4px;
+`;
+
+const StyledH6Underlined = styled.h6`
+  color: ${({ theme }) => theme.colors.white};
+  textDecorationLine: Underline;
+`;
+
 function Item(props) {
 
   const {checkin, user, readItemHistory, updateCurrentItem, createItemHistory, forHistory} = props;
@@ -145,29 +155,27 @@ function Item(props) {
 
   return (
         <InfoArea2>
-          <h6>
-            <StyledSpan> Owned by: </StyledSpan>
-            {checkin.owner}
-          </h6>
 
-          <h6>Time</h6>
-          {moment(checkin.time.toDate()).format('ll')}
+          <StyledH6Underlined> Owned by: </StyledH6Underlined>
+          <StyledH6>{checkin.owner}</StyledH6>
 
-          <h6>Item Type</h6>
-          {checkin.type}
+          <StyledH6Underlined>Time</StyledH6Underlined>
+          <StyledH6>{moment(checkin.time.toDate()).format('ll')}</StyledH6>
 
-          <h6>Item Name</h6>
-          {checkin.name}
+          <StyledH6Underlined>Item Type</StyledH6Underlined>
+          <StyledH6>{checkin.type}</StyledH6>
 
-          <h6>Item Description</h6>
-          {checkin.description}
+          <StyledH6Underlined>Item Name</StyledH6Underlined>
+          <StyledH6>{checkin.name}</StyledH6>
 
-          <h6>Item Unique Identifier</h6>
-          {checkin.uniqueIdentifier}
+          <StyledH6Underlined>Item Description</StyledH6Underlined>
+          <StyledH6>{checkin.description}</StyledH6>
 
-          <h6>Item Location</h6>
-          {checkin.location}
+          <StyledH6Underlined>Item Unique Identifier</StyledH6Underlined>
+          <StyledH6>{checkin.uniqueIdentifier}</StyledH6>
 
+          <StyledH6Underlined>Item Location</StyledH6Underlined>
+          <StyledH6>{checkin.location}</StyledH6>
 
           {!isForHistory &&
             <React.Fragment>
