@@ -5,10 +5,11 @@
 # Git-hub: https://github.com/Ash-Rahman/Inventory-Management
 
 # Contents
-Introduction	3
-Methodology	4
-Methods	5
-Conclusion / Results	6
+### Introduction
+### Methodology
+### Methods
+### Conclusion / Results
+### References
 
 # Introduction
 For this project I have created an Inventory Management system which will be used by Telesoft Technologies employees to organise inventory amongst all the engineering teams. I previously conducted interviews with employees to further understand the problems of inventory management within the company. From these interviews I found 4 problem areas.
