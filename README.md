@@ -1,4 +1,3 @@
-# Project
 ## Telesoft Inventory Management
 This project is the Telesoft Invetory Management systems source code, created by Ashikur Rahman.
 
